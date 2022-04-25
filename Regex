@@ -1,8 +1,0 @@
-function firstMatch(str){
-	if(str.length > 7 || str.length < 7){
-		return false;
-	} else {
-		let pattern = /[0-9]{7}$/;
-		return (pattern.test(str)) ? true : false;
-	}
-}
