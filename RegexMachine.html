@@ -13,6 +13,12 @@
 	<body>
 		<!-- onchange="func1(this.value)" -->
 		<input type="text" id="input">
+		<div id="temp">
+			<h1>Order #: <span id="order_number"></span></h1>
+			<h1>Serial #: <span id="serial_number"></span></h1>
+			<h1>Asset #: <span id="asset_number"></span></h1>
+			<h1>Peripheral: <span id="peripherals"></span></h1>
+		</div>
 		<div id="warning" class="warning"><div></div></div>
 		<div id="output"></div>
 
@@ -83,7 +89,10 @@
 			let warning = document.getElementById("warning");
 			let orderList = new Array();
 			let orderTemp = null;
-			let state = 0;
+			let orderNumber = document.getElementById("order_number");
+			let serialNumber = document.getElementById("serial_number");
+			let assetNumber = document.getElementById("asset_number");
+			let peripherals = document.getElementById("peripherals");
 
 			input.addEventListener("change", func1, false);
 
@@ -94,22 +103,34 @@
 						output.appendChild(createOrderView(orderTemp));
 					}
 					orderTemp = new OrderForm();
+					orderNumber.innerText = "";
+					serialNumber.innerText = "";
+					assetNumber.innerText = "";
+					peripherals.innerText = "";
 					orderTemp.orderId = this.value;
+					orderNumber.innerText = this.value;
 				} else if(secondMatch(this.value) && orderTemp.orderName == null){
 					if(orderTemp != null && orderTemp.orderId != null){
 						orderTemp.orderName = this.value;
+						serialNumber.innerText = this.value;
 					} else {
 						console.error("Order Format Wrong");
 					}
 				} else if(thirdMatch(this.value) && orderTemp.orderTag == null){
 					if(orderTemp != null && orderTemp.orderId != null && orderTemp.orderName != null){
 						orderTemp.orderTag = this.value;
+						assetNumber.innerText = this.value;
 					} else{
 						console.error("Order Format Wrong");
 					}
 				} else if(fourthMatch(this.value)){
 					if(orderTemp != null && orderTemp.orderId != null && orderTemp.orderName != null && orderTemp.orderTag != null){
 						orderTemp.orderPeripherals.push(this.value);
+						if(orderTemp.orderPeripherals.length == 1){
+							peripherals.innerText = this.value; 
+						} else {
+							peripherals.innerText = peripherals.innerText + ", " + this.value; 
+						}
 					} else{
 						console.error("Order Format Wrong");
 					}
