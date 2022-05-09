@@ -1,67 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<style>
-			.warning{
-				color: red;
-			}
-			.order{
-				border: 2px solid black;
-				width: fit-content;
-			}
-		</style>
+		<link rel="stylesheet" href="mystyle.css">
+	</head>
+
 	<body>
-		<!-- onchange="func1(this.value)" -->
 		<input type="text" id="input">
+
 		<div id="temp">
-			<h1>Order #: <span id="order_number"></span></h1>
-			<h1>Serial #: <span id="serial_number"></span></h1>
-			<h1>Asset #: <span id="asset_number"></span></h1>
-			<h1>Peripheral: <span id="peripherals"></span></h1>
+			<p>Order #: <span id="order_number"></span></p>
+			<p>Item #: <span id="item_number"></span></p>
+			<p>Serial #: <span id="serial_number"></span></p>
+			<p>Asset #: <span id="asset_number"></span></p>
 		</div>
-		<div id="warning" class="warning"><div></div></div>
+
+
 		<div id="output"></div>
 
+		<script src="./OrderFormComponents/OrderForm.js"></script>
+		<script src="./OrderFormComponents/OrderFormId.js"></script>
+		<script src="./OrderFormComponents/OrderNumber.js"></script>
+		<script src="./OrderFormComponents/ItemNumber.js"></script>
+		<script src="./OrderFormComponents/SerialNumber.js"></script>
+		<script src="./OrderFormComponents/AssetNumber.js"></script>
 		<script>
-			class OrderForm{
-				constructor(){
-					this.orderId = null;
-					this.orderName = null;
-					this.orderTag = null;
-					this.orderPeripherals = [];
-				}
-			}
 
-			function createOrderView(x){
-				let el = document.createElement("div");
-				el.className = "order";
-				
-				let br = document.createElement("br");
-				let text = document.createTextNode("Order #: " + x.orderId);
-				el.appendChild(text);
-				el.appendChild(br);
-				
-				br = document.createElement("br");
-				text = document.createTextNode("Serial #: " + x.orderName);
-				el.appendChild(text);
-				el.appendChild(br);
-				
-				br = document.createElement("br");
-				text = document.createTextNode("Asset #: " + x.orderTag);
-				el.appendChild(text);
-				el.appendChild(br);
-				
-				text = document.createTextNode("Peripherals: " + x.orderPeripherals);
-				el.appendChild(text);
-				return el;
 
-			}
-
-			function createWarning(x){
-				return document.createTextNode(x); 
-			}
-
-			function firstMatch(str){
+			function sevenSequentialNumbersMatcher(str){
 				if(str.length > 7 || str.length < 7){
 					return false;
 				} else {
@@ -69,8 +34,14 @@
 					return pattern.test(str);
 				}
 			}
+
 			function secondMatch(str){
-				return true;
+				if(str.length > 7 || str.length < 7){
+					return false;
+				} else {
+					let pattern = /((([0-9]||[A-Z])*[0-9]([0-9]||[A-Z])*[A-Z]([0-9]||[A-Z])*)||(([0-9]||[A-Z])*[A-Z]([0-9]||[A-Z])*[0-9]([0-9]||[A-Z])*))$/;
+					return pattern.test(str);
+				}
 			}
 			function thirdMatch(str){
 				if(str.length > 10 || str.length < 10){
@@ -80,64 +51,63 @@
 					return pattern.test(str);
 				}
 			}
-			function fourthMatch(str){
-				return true;
-			}
+
+
+
 
 			let input = document.getElementById("input");
-			let output = document.getElementById("output");
-			let warning = document.getElementById("warning");
-			let orderList = new Array();
-			let orderTemp = null;
-			let orderNumber = document.getElementById("order_number");
-			let serialNumber = document.getElementById("serial_number");
-			let assetNumber = document.getElementById("asset_number");
-			let peripherals = document.getElementById("peripherals");
-
 			input.addEventListener("change", func1, false);
 
+
+
+			let output = document.getElementById("output");
+			let orderList = new Array();
+
+
+			let idTemp = null;
+			let itemTemp = null;
+			let serialTemp = null;
+			let assetTemp = null;
+
+
+			let orderNumber = document.getElementById("order_number");
+			let itemNumber = document.getElementById("item_number");
+			let serialNumber = document.getElementById("serial_number");
+			let assetNumber = document.getElementById("asset_number");
+
+
 			function func1(){
-				if(firstMatch(this.value)){
-					if(orderTemp != null && orderTemp.orderId != null && orderTemp.orderName != null){
-						orderList.push(orderTemp);
-						output.appendChild(createOrderView(orderTemp));
+				if(sevenSequentialNumbersMatcher(this.value)){
+
+					if(idTemp != null && serialTemp != null && assetTemp != null){
+						
+						orderList.push(new OrderForm(idTemp,"", serialTemp, assetTemp));
+						output.appendChild(orderList[orderList.length - 1].element);
+
+						idTemp = null;
+						serialTemp = null;
+						assetTemp = null;
 					}
-					orderTemp = new OrderForm();
+
+
 					orderNumber.innerText = "";
 					serialNumber.innerText = "";
 					assetNumber.innerText = "";
-					peripherals.innerText = "";
-					orderTemp.orderId = this.value;
-					orderNumber.innerText = this.value;
-				} else if(secondMatch(this.value) && orderTemp.orderName == null){
-					if(orderTemp != null && orderTemp.orderId != null){
-						orderTemp.orderName = this.value;
-						serialNumber.innerText = this.value;
-					} else {
-						console.error("Order Format Wrong");
-					}
-				} else if(thirdMatch(this.value) && orderTemp.orderTag == null){
-					if(orderTemp != null && orderTemp.orderId != null && orderTemp.orderName != null){
-						orderTemp.orderTag = this.value;
-						assetNumber.innerText = this.value;
-					} else{
-						console.error("Order Format Wrong");
-					}
-				} else if(fourthMatch(this.value)){
-					if(orderTemp != null && orderTemp.orderId != null && orderTemp.orderName != null && orderTemp.orderTag != null){
-						orderTemp.orderPeripherals.push(this.value);
-						if(orderTemp.orderPeripherals.length == 1){
-							peripherals.innerText = this.value; 
-						} else {
-							peripherals.innerText = peripherals.innerText + ", " + this.value; 
-						}
-					} else{
-						console.error("Order Format Wrong");
-					}
-				}
 
-				else {
-					warning.replaceChild(createWarning("Input did not match first regex matcher"),warning.firstChild);
+					idTemp = this.value;
+					orderNumber.innerText = this.value;
+
+				} else if(sevenSequentialNumbersMatcher(this.value) && idTemp != null){
+					console.log(this.value);
+				} 
+
+				else if(secondMatch(this.value) && idTemp != null && serialTemp == null){
+					serialTemp = this.value;
+					serialNumber.innerText = this.value;
+				} else if(thirdMatch(this.value) && idTemp != null && serialTemp != null && assetTemp == null){
+					assetTemp = this.value;
+					assetNumber.innerText = this.value;
+				} else {
 				}
 
 				this.value = "";

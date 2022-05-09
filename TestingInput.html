@@ -28,205 +28,23 @@
 		</style>
 	</head>
 	<body>
-
+		<script src="./OrderFormComponents/OrderForm.js"></script>
+		<script src="./OrderFormComponents/OrderFormId.js"></script>
+		<script src="./OrderFormComponents/OrderNumber.js"></script>
+		<script src="./OrderFormComponents/ItemNumber.js"></script>
+		<script src="./OrderFormComponents/SerialNumber.js"></script>
+		<script src="./OrderFormComponents/AssetNumber.js"></script>
 		<script>
-			class OrderNumber{
-				constructor(val){
-					this.value = val;
-					this.text = this.text();
-					this.input = this.input();
+			let list = [
+				new OrderForm("1234561","234234","","ITE0001234"),
+				new OrderForm("1234561","200004","MXL12345","ITE0001236")
+			];
 
-					this.element = this.init(this.text, this.input);
-				}
-
-				text(){
-					let main = document.createElement("p");
-					main.className = "order_text";
-					main.innerText = "Order #: ";
-					return main;
-				}
-
-				input(){
-					let main = document.createElement("input");
-					main.className = "order_input";
-					main.value = this.value;
-					main.readOnly = true;
-					main.addEventListener("change", () => {
-						this.value = this.input.value;
-					});
-					return main;
-				}
-
-				init(text,input){
-					let main = document.createElement("div");
-					main.className = "order_content";
-					main.appendChild(text);
-					main.appendChild(input);
-					return main;
-				}
-
-			}
-			class ItemNumber{
-				constructor(val){
-					this.value = val;
-					this.text = this.text();
-					this.input = this.input();
-
-					this.element = this.init(this.text, this.input);
-				}
-
-				text(){
-					let main = document.createElement("p");
-					main.className = "order_text";
-					main.innerText = "Item #: ";
-					return main;
-				}
-
-				input(){
-					let main = document.createElement("input");
-					main.className = "order_input";
-					main.value = this.value;
-					main.readOnly = true;
-					main.addEventListener("change", () => {
-						this.value = this.input.value;
-					});
-					return main;
-				}
-
-				init(text,input){
-					let main = document.createElement("div");
-					main.className = "order_content";
-					main.appendChild(text);
-					main.appendChild(input);
-					return main;
-				}
-
-			}
-			class SerialNumber{
-				constructor(val){
-					this.value = val;
-					this.text = this.text();
-					this.input = this.input();
-
-					this.element = this.init(this.text, this.input);
-				}
-
-				text(){
-					let main = document.createElement("p");
-					main.className = "order_text";
-					main.innerText = "Serial #: ";
-					return main;
-				}
-
-				input(){
-					let main = document.createElement("input");
-					main.className = "order_input";
-					main.value = this.value;
-					main.readOnly = true;
-					main.addEventListener("change", () => {
-						this.value = this.input.value;
-					});
-					return main;
-				}
-
-				init(text,input){
-					let main = document.createElement("div");
-					main.className = "order_content";
-					main.appendChild(text);
-					main.appendChild(input);
-					return main;
-				}
-
-			}
-			class AssetNumber{
-				constructor(val){
-					this.value = val;
-					this.text = this.text();
-					this.input = this.input();
-
-					this.element = this.init(this.text, this.input);
-				}
-
-				text(){
-					let main = document.createElement("p");
-					main.className = "order_text";
-					main.innerText = "Asset #: ";
-					return main;
-				}
-
-				input(){
-					let main = document.createElement("input");
-					main.className = "order_input";
-					main.value = this.value;
-					main.readOnly = true;
-					main.addEventListener("change", () => {
-						this.value = this.input.value;
-					});
-					return main;
-				}
-
-				init(text,input){
-					let main = document.createElement("div");
-					main.className = "order_content";
-					main.appendChild(text);
-					main.appendChild(input);
-					return main;
-				}
-
-			}
-			class OrderForm{
-				constructor(values){
-					this.isEditing = false;
-
-					this.x = new OrderNumber(values[0]);
-					this.y = new ItemNumber(values[1]);
-					this.z = new SerialNumber(values[2]);
-					this.a = new AssetNumber(values[3]);
-
-					this.element = this.init(this.x,this.y,this.z,this.a);
-				}
-
-				init(x,y,z,a){
-					let main = document.createElement("div");
-					main.className = "order_container";
-					main.appendChild(x.element);
-					main.appendChild(y.element);
-					main.appendChild(z.element);
-					main.appendChild(a.element);
-
-					let button = document.createElement("button");
-					button.innerText = "Edit";
-					button.addEventListener("click", () => {
-						if(this.isEditing){
-							this.isEditing = false;
-							this.x.input.readOnly = true;
-							this.y.input.readOnly = true;
-							this.z.input.readOnly = true;
-							this.a.input.readOnly = true;
-							button.innerText = "Edit";
-						} else {
-							this.isEditing = true;
-							this.x.input.readOnly = false;
-							this.y.input.readOnly = false;
-							this.z.input.readOnly = false;
-							this.a.input.readOnly = false;
-							button.innerText = "Save";
-						}
-					});
-
-					main.appendChild(button);
-
-					return main;
-				}
+			for(let el of list){
+				document.getElementsByTagName("body")[0].appendChild(el.element);
 			}
 
-
-
-			let x = new OrderForm(["1234561","234234","","ITE0001234"]);
-			let y = new OrderForm(["1234561","200004","MXL12345","ITE0001236"]);
-
-			document.getElementsByTagName("body")[0].appendChild(x.element);
-			document.getElementsByTagName("body")[0].appendChild(y.element);
+			
 		</script>
 	</body>
 </html>

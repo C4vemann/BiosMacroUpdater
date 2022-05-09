@@ -39,109 +39,31 @@
 				{
 					optionId:0,
 					optionName:"Z4",
-					optionFileName:"Z4.mac",
+					optionBiosVersion:"2.75",
+					optionFileName:"Z4.html",
 				},
 				{
 					optionId:1,
 					optionName:"600 G6",
-					optionFileName:"600 G6.mac",
+					optionBiosVersion:"2.10.10",
+					optionFileName:"600G6.html",
 				},
 				{
 					optionId:2,
-					optionName:"5090pro",
-					optionFileName:"5090pro.mac",
-				},
-				{
-					optionId:3,
-					optionName:"7X50",
-					optionFileName:"7X50.mac",
-				},
-				{
-					optionId:4,
-					optionName:"7X60",
-					optionFileName:"7X60.mac",
-				},
-				{
-					optionId:5,
-					optionName:"5410",
-					optionFileName:"5410.mac",
-				},
-				{
-					optionId:6,
-					optionName:"5420",
-					optionFileName:"5420.mac",
-				},
-				{
-					optionId:7,
-					optionName:"5820",
-					optionFileName:"5820.mac",
-				},
-				{
-					optionId:8,
-					optionName:"7220 Rugged",
-					optionFileName:"7220 Rugged.mac",
-				},
-				{
-					optionId:9,
-					optionName:"7320 Det",
-					optionFileName:"7320 Det.mac",
-				},
-				{
-					optionId:10,
-					optionName:"7424 Rugged",
-					optionFileName:"7424 Rugged.mac",
+					optionName:"5090 Pro",
+					optionBiosVersion:"1.5.0",
+					optionFileName:"5090pro.html",
 				}
 			];
 
-			function textToSaveToFile(name, version){
-				let text = 
-`<HAScript name="` + name + `" description="" timeout="60000" pausetime="300" promptall="true" blockinput="true" author="nyconfig" creationdate="Apr 6, 2022 1:00:53 PM" supressclearevents="false" usevars="false" ignorepauseforenhancedtn="true" delayifnotenhancedtn="0" ignorepausetimeforenhancedtn="true" continueontimeout="false">
-	<screen name="Screen1" entryscreen="true" exitscreen="false" transient="false">
-		<description>
-			<oia status="NOTINHIBITED" optional="false" invertmatch="false" />
-		</description>
-		<actions>
-			<input value="[pf6]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
-		</actions>
-		<nextscreens timeout="0" >
-			<nextscreen name="Screen2" />
-		</nextscreens>
-	</screen>
-	
-	<screen name="Screen2" entryscreen="false" exitscreen="false" transient="false">
-		<description>
-			<oia status="NOTINHIBITED" optional="false" invertmatch="false" />
-			<numfields number="70" optional="true" invertmatch="false" />
-			<numinputfields number="4" optional="true" invertmatch="false" />
-		</description>
-		<actions>
-			<input value="[pf7]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
-		</actions>
-		<nextscreens timeout="0" >
-			<nextscreen name="Screen3" />
-		</nextscreens>
-	</screen>
-
-	<screen name="Screen3" entryscreen="false" exitscreen="true" transient="false">
-		<description>
-			<oia status="NOTINHIBITED" optional="false" invertmatch="false" />
-			<numfields number="43" optional="true" invertmatch="false" />
-			<numinputfields number="3" optional="true" invertmatch="false" />
-		</description>
-		<actions>
-			<input value="` + version + `[enter]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
-		</actions>
-		<nextscreens timeout="0" >
-		</nextscreens>
-	</screen>
-</HAScript>`;
-		
+			function textToSaveToFile(x){
+				let text = "<!DOCTYPE html><html><body><div><h1>" + x + "</h1></div></body></html>";
 				return text;
 			}
 			
 			function changeBiosVersion(){
 				options[currentSelectedOptionId].optionBiosVersion = document.getElementById("newBiosVersionInput").value;
-				let text = textToSaveToFile(options[currentSelectedOptionId].optionName,options[currentSelectedOptionId].optionBiosVersion);
+				let text = textToSaveToFile(options[currentSelectedOptionId].optionBiosVersion);
 
 				let dl = document.createElement("a");
 				dl.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
@@ -173,6 +95,11 @@
 				let text = document.createTextNode("Name: " + options[this.id].optionName);
 				textEl.appendChild(text);
 				el.appendChild(textEl);
+
+				textEl = document.createElement("h1");
+				text = document.createTextNode("Bios Version: " + options[this.id].optionBiosVersion);
+				textEl.appendChild(text);
+				el.appendChild(textEl);
 				
 				textEl = document.createElement("h1");
 				text = document.createTextNode("File Location: " + options[this.id].optionFileName);
@@ -202,6 +129,16 @@
 				el.appendChild(textEl);
 
 				optionList.appendChild(el);
+			}
+
+
+			function firstMatch(str){
+				if(str.length > 7 || str.length < 7){
+					return false;
+				} else {
+					let pattern = /[0-9]{7}$/;
+					return (pattern.test(str)) ? true : false;
+				}
 			}
 
 		</script>
