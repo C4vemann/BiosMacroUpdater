@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="mystyle.css">
+	</head>
+
+	<body>
+		<input type="text" id="input">
+		<button id="reset_button">Reset</button>
+
+		<div id="temp">
+			<p>Order #: <span id="order_number"></span></p>
+			<p>Item #: <span id="item_number"></span></p>
+			<p>Serial #: <span id="serial_number"></span></p>
+			<p>Asset #: <span id="asset_number"></span></p>
+			<p>Peripherals: <span id="peripheral_numbers"></span></p>
+		</div>
+
+
+		<div id="output"></div>
+
+		<script src="./OrderFormComponents/OrderForm.js"></script>
+		<script src="./OrderFormComponents/OrderFormId.js"></script>
+		<script src="./OrderFormComponents/OrderNumber.js"></script>
+		<script src="./OrderFormComponents/ItemNumber.js"></script>
+		<script src="./OrderFormComponents/SerialNumber.js"></script>
+		<script src="./OrderFormComponents/AssetNumber.js"></script>
+		<script src="./OrderFormComponents/Peripherals.js"></script>
+		<script>
+
+			let orderNumber = document.getElementById("order_number");
+			let itemNumber = document.getElementById("item_number");
+			let serialNumber = document.getElementById("serial_number");
+			let assetNumber = document.getElementById("asset_number");
+			let peripheralNumbers = document.getElementById("peripheral_numbers");
+
+			let peripheralValues = new Array();
+
+			let input = document.getElementById("input");
+			input.addEventListener("change", func1, false);
+
+			let reset = document.getElementById("reset_button");
+			reset.addEventListener("click", () => {
+				orderNumber.innerText = "";
+				itemNumber.innerText = "";
+				serialNumber.innerText = "";
+				assetNumber.innerText = "";
+				peripheralNumbers.innerText = "";
+				peripheralValues = new Array();
+				gate = false;
+			}, false);
+
+			let output = document.getElementById("output");
+			let orderList = new Array();
+
+			let gate = false;
+
+
+			function func1(){
+
+				if(orderNumberMatcher(this.value) && !gate){
+
+					if(orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' &&  assetNumber.innerText != ''){
+						orderList.push(new OrderForm(orderNumber.innerText,itemNumber.innerText, serialNumber.innerText, assetNumber.innerText,peripheralValues));
+						output.appendChild(orderList[orderList.length - 1].element);
+
+						orderNumber.innerText = "";
+						itemNumber.innerText = "";
+						serialNumber.innerText = "";
+						assetNumber.innerText = "";
+						peripheralNumbers.innerText = "";
+						peripheralValues = new Array();
+					}
+
+
+
+					orderNumber.innerText = this.value;
+					gate = true;
+
+				} else if(itemNumberMatcher(this.value) && orderNumber.innerText != ''){
+					itemNumber.innerText = this.value;
+					gate = false;
+				} else if(serialNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText == ''){
+					serialNumber.innerText = this.value;
+				} else if(assetNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' && assetNumber.innerText == ''){
+					assetNumber.innerText = this.value;
+				} else if(peripheralNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' && assetNumber.innerText != ''){
+					peripheralValues.push(this.value);
+					if(peripheralValues.length == 1){
+						peripheralNumbers.innerText = this.value;
+					} else{
+						peripheralNumbers.innerText = peripheralNumbers.innerText + "," + this.value;
+					}
+				} else {
+				}
+
+				this.value = "";
+			}
+
+
+			function orderNumberMatcher(str){
+				if(str.length == 7){
+					let pattern = /^[0-9]{7}$/;
+					return pattern.test(str);
+				} else {
+					return false;
+				}
+			}
+
+			function itemNumberMatcher(str){
+				if(str.length == 7){
+					let pattern = /^[0-9]{7}$/;
+					return pattern.test(str);
+				} else {
+					return false;
+				}
+			}
+
+			function serialNumberMatcher(str){
+				if(str.length == 7){
+					let pattern = /^(?=.*[A-Z])(?=.*\d)[A-Z\d]{7}$/;
+					return pattern.test(str);
+				} else if(str.length == 10){
+					let pattern = /^MXL(?=.*[A-Z])(?=.*\d)[A-Z\d]{7}$/;
+					return pattern.test(str);
+				} else {
+					return false;
+				}
+			}
+			function assetNumberMatcher(str){
+				if(str.length == 10){
+					let pattern = /^ITE[0-9]{7}$/;
+					return pattern.test(str);
+				} else {
+					return false;
+				}
+			}
+			function peripheralNumberMatcher(str){
+				if(str.length == 12){
+					let pattern = /^(?=.*[A-Z])(?=.*\d)[A-Z\d]{12}$/;
+					return pattern.test(str);
+				} else if(str.length == 15){
+					let pattern = /^(?=.*[A-Z])(?=.*\d)[A-Z\d]{15}$/;
+					return pattern.test(str);
+				} else {
+					return false;
+				}
+			}
+
+		</script>
+	</body>
+</html>
