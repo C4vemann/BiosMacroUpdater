@@ -1,7 +1,7 @@
 class MyRegex{
 	static orderNumberMatcher(str){
-		if(str.length == 7){
-			let pattern = /^[0-9]{7}$/;
+		if(str.length == 6){
+			let pattern = /^[0-9]{6}$/;
 			return pattern.test(str);
 		} else {
 			return false;
@@ -30,8 +30,8 @@ class MyRegex{
 	}
 
 	static assetNumberMatcher(str){
-		if(str.length == 10){
-			let pattern = /^ITE[0-9]{7}$/;
+		if(str.length == 11){
+			let pattern = /^ITE[0-9]{8}$/;
 			return pattern.test(str);
 		} else {
 			return false;
