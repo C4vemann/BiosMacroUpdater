@@ -1,7 +1,7 @@
 class OrderForm{
 	static count = 0;
 	
-	constructor(x,y,z,a){
+	constructor(x,y,z,a,b){
 		OrderForm.increaseCount();
 		this.isEditing = false;
 
@@ -10,13 +10,14 @@ class OrderForm{
 		this.itemNumber = new ItemNumber(y);
 		this.serialNumber = new SerialNumber(z);
 		this.assetNumber = new AssetNumber(a);
+		this.peripherals = new Peripherals(b);
 		
-		this.element = this.init(this.formId, this.orderNumber,this.itemNumber,this.serialNumber,this.assetNumber);
+		this.element = this.init(this.formId, this.orderNumber,this.itemNumber,this.serialNumber,this.assetNumber,this.peripherals);
 	}
 	static increaseCount(){
 		return OrderForm.count++;
 	}
-	init(id, x,y,z,a){
+	init(id, x,y,z,a,b){
 		let main = document.createElement("div");
 		main.className = "order_container";
 		main.appendChild(id.element);
@@ -24,6 +25,8 @@ class OrderForm{
 		main.appendChild(y.element);
 		main.appendChild(z.element);
 		main.appendChild(a.element);
+		main.appendChild(b.element);
+		
 		let button = document.createElement("button");
 		button.innerText = "Edit";
 		button.addEventListener("click", () => {
@@ -33,6 +36,9 @@ class OrderForm{
 				this.itemNumber.input.readOnly = true;
 				this.serialNumber.input.readOnly = true;
 				this.assetNumber.input.readOnly = true;
+				for(let x of this.peripherals.values){
+					x.input.readOnly = true;
+				}
 				button.innerText = "Edit";
 			} else {
 				this.isEditing = true;
@@ -40,6 +46,9 @@ class OrderForm{
 				this.itemNumber.input.readOnly = false;
 				this.serialNumber.input.readOnly = false;
 				this.assetNumber.input.readOnly = false;
+				for(let x of this.peripherals.values){
+					x.input.readOnly = false;
+				}
 				button.innerText = "Save";
 			}
 		});

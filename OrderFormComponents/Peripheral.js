@@ -1,18 +1,11 @@
-class OrderNumber{
+class Peripheral{
 	constructor(val){
 		this.value = val;
-		this.text = this.text();
 		this.input = this.input();
 
-		this.element = this.init(this.text, this.input);
+		this.element = this.init(this.input);
 	}
 
-	text(){
-		let main = document.createElement("p");
-		main.className = "order_text";
-		main.innerText = "Order #: ";
-		return main;
-	}
 
 	input(){
 		let main = document.createElement("input");
@@ -20,7 +13,7 @@ class OrderNumber{
 		main.value = this.value;
 		main.readOnly = true;
 		main.addEventListener("change", () => {
-			if(MyRegex.orderNumberMatcher(this.input.value)){
+			if(MyRegex.peripheralNumberMatcher(this.input.value)){
 				this.value = this.input.value;
 			} else {
 				this.input.value = this.value;
@@ -29,10 +22,9 @@ class OrderNumber{
 		return main;
 	}
 
-	init(text,input){
+	init(input){
 		let main = document.createElement("div");
 		main.className = "order_content";
-		main.appendChild(text);
 		main.appendChild(input);
 		return main;
 	}

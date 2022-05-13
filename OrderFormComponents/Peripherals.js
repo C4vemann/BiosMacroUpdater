@@ -1,11 +1,13 @@
 class Peripherals{
 	constructor(x){
-		this.values = x;
-		console.log(this.values);
-		this.text = this.text();
-		//this.input = this.input();
+		this.values = new Array();
+		for(let val of x){
+			this.values.push(new Peripheral(val));
+		}
 
-		this.element = this.init(this.text/*,this.input*/);
+		this.text = this.text();
+
+		this.element = this.init(this.values, this.text);
 	}
 
 	text(){
@@ -15,33 +17,16 @@ class Peripherals{
 		return main;
 	}
 
-	/*change(){
-		console.log(this.value);
-		console.log(this.values);
-		console.log(this.values.at(this.id));
-		this.values[this.id] = this.value;
-	}
-
-	input(){
-		let main = document.createElement("div");
-		for(let i = 0; i < this.values.length; i++){
-			let sub = document.createElement("input");
-			sub.id = i;
-			sub.className = "order_input";
-			sub.value = this.values[i];
-			sub.readOnly = false;
-			sub.addEventListener("change", this.change,false);
-			main.appendChild(sub);
-		}
-		return main;
-	}*/
-
-	init(text/*,input*/){
+	init(values, text){
 		let main = document.createElement("div");
 		main.className = "order_content";
 		main.appendChild(text);
-/*		main.appendChild(input);
-*/		return main;
+
+		for(let val of this.values){
+			main.appendChild(val.element);
+		}
+
+		return main;
 	}
 
 

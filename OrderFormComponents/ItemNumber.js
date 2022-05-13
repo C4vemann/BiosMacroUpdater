@@ -20,7 +20,11 @@ class ItemNumber{
 		main.value = this.value;
 		main.readOnly = true;
 		main.addEventListener("change", () => {
-			this.value = this.input.value;
+			if(MyRegex.itemNumberMatcher(this.input.value)){
+				this.value = this.input.value;
+			} else {
+				this.input.value = this.value;
+			}
 		});
 		return main;
 	}
