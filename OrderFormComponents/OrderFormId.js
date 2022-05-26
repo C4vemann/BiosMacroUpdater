@@ -6,7 +6,7 @@ class OrderFormId{
 	}
 	text(){
 		let main = document.createElement("p");
-		main.className = "order_text";
+		main.className = "order_text form_id";
 		main.innerText = this.value + ".";
 		return main;
 	}
@@ -14,5 +14,9 @@ class OrderFormId{
 		let main = document.createElement("div");
 		main.appendChild(text);
 		return main;
+	}
+	changeValue(x){
+		this.value = x;
+		this.text.innerText = x + ".";
 	}
 }

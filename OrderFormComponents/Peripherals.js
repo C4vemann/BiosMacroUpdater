@@ -7,6 +7,8 @@ class Peripherals{
 
 		this.text = this.text();
 
+		
+
 		this.element = this.init(this.values, this.text);
 	}
 
@@ -22,12 +24,34 @@ class Peripherals{
 		main.className = "order_content";
 		main.appendChild(text);
 
-		for(let val of this.values){
-			main.appendChild(val.element);
+		if(this.values.length == 0){
+			main.appendChild(this.createEmptyInput());
+		} else {
+			for(let val of this.values){
+				main.appendChild(val.element);
+			}
+
 		}
+
 
 		return main;
 	}
 
+	createEmptyInput(){
+		let emptyInput = document.createElement("input");
+
+		emptyInput.className = "order_input";
+		emptyInput.readOnly = true;
+		emptyInput.addEventListener("change", () => {
+			/*if(MyRegex.peripheralNumberMatcher(this.input.value)){
+				this.value = this.input.value;
+			} else {
+				this.input.value = this.value;
+			}*/
+
+			console.log(this);
+		});
+		return emptyInput;
+	}
 
 }
