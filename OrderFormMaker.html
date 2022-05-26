@@ -20,6 +20,7 @@
 
 		<div id="output"></div>
 
+		<script src="./OrderFormComponents/OrderList.js"></script>
 		<script src="./OrderFormComponents/OrderForm.js"></script>
 		<script src="./OrderFormComponents/OrderFormId.js"></script>
 		<script src="./OrderFormComponents/OrderNumber.js"></script>
@@ -50,7 +51,6 @@
 				assetNumber.innerText = "";
 				peripheralNumbers.innerText = "";
 				peripheralValues = new Array();
-				gate = false;
 			}, false);
 
 			let done = document.getElementById("done_button");
@@ -59,18 +59,25 @@
 			});
 
 			let output = document.getElementById("output");
-			let orderList = new Array();
+			let orderList = new OrderList();
 
-			let gate = false;
+			orderList.push("123456","2306184","F4F4F4F", "ITE00001234",["N3N3N3N3N3N3","H2H2H2H2H2H2"]);
+			orderList.push("123457","2306184","G6G6G6G", "ITE00001235",[]);
+			orderList.push("123458","2306184","Z9Z9Z9Z", "ITE00001236",[]);
+			orderList.push("222228","3333333","J2J2J2J", "ITE00001237",[]);
 
+
+			for(let obj of orderList.list){
+				output.appendChild(obj.element);
+			}
 
 			function func1(){
 
-				if(MyRegex.orderNumberMatcher(this.value) && !gate){
+				if(MyRegex.orderNumberMatcher(this.value)){
 
 					if(orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' &&  assetNumber.innerText != ''){
-						orderList.push(new OrderForm(orderNumber.innerText,itemNumber.innerText, serialNumber.innerText, assetNumber.innerText,peripheralValues));
-						output.appendChild(orderList[orderList.length - 1].element);
+						orderList.push(orderNumber.innerText,itemNumber.innerText, serialNumber.innerText, assetNumber.innerText,peripheralValues);
+						output.appendChild(orderList.list[orderList.list.length - 1].element);
 
 						orderNumber.innerText = "";
 						itemNumber.innerText = "";
@@ -81,11 +88,9 @@
 					}
 
 					orderNumber.innerText = this.value;
-					gate = true;
 
 				} else if(MyRegex.itemNumberMatcher(this.value) && orderNumber.innerText != ''){
 					itemNumber.innerText = this.value;
-					gate = false;
 				} else if(MyRegex.serialNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText == ''){
 					serialNumber.innerText = this.value;
 				} else if(MyRegex.assetNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' && assetNumber.innerText == ''){

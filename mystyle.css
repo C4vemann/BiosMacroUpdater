@@ -1,6 +1,9 @@
 #output{
+	margin: auto;
+	max-width: 800px;
 	display: flex;
-	justify-content: center;
+	flex-wrap: wrap;
+	justify-content: space-around;
 }
 *{
 	margin: 0;
@@ -11,6 +14,7 @@
 	flex-direction: column;
 	border: 2px solid black;
 	width: fit-content;
+	margin: 10px 0;
 
 }
 .order_content{
@@ -20,4 +24,10 @@
 }
 .order_input{
 	margin: 0 4px;
+}
+.delete_button{
+	float: right;
+}
+.form_id{
+	float: left;
 }
