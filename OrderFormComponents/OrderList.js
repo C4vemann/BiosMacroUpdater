@@ -11,6 +11,7 @@ class OrderList{
 
 	pop(){
 		this.list.pop();
+		this.top--;
 	}
 	removeByIndex(x){
 		if(this.top <= 0){

@@ -10,7 +10,7 @@ class OrderForm{
 		this.itemNumber = new ItemNumber(y);
 		this.serialNumber = new SerialNumber(z);
 		this.assetNumber = new AssetNumber(a);
-		this.peripherals = new Peripherals(b);
+		this.peripherals = new PeripheralList(b);
 		
 		this.element = this.init(this.formId, this.orderNumber,this.itemNumber,this.serialNumber,this.assetNumber,this.peripherals);
 	}
@@ -65,9 +65,10 @@ class OrderForm{
 				this.itemNumber.input.readOnly = true;
 				this.serialNumber.input.readOnly = true;
 				this.assetNumber.input.readOnly = true;
-				for(let x of this.peripherals.values){
+				for(let x of this.peripherals.list){
 					x.input.readOnly = true;
 				}
+				this.peripherals.emptyInput.readOnly = true;
 				button.innerText = "Edit";
 			} else {
 				this.isEditing = true;
@@ -75,9 +76,10 @@ class OrderForm{
 				this.itemNumber.input.readOnly = false;
 				this.serialNumber.input.readOnly = false;
 				this.assetNumber.input.readOnly = false;
-				for(let x of this.peripherals.values){
+				for(let x of this.peripherals.list){
 					x.input.readOnly = false;
 				}
+				this.peripherals.emptyInput.readOnly = false;
 				button.innerText = "Save";
 			}
 		});
