@@ -37,7 +37,6 @@ class OrderForm{
 					}
 				}
 				this.parentList.pop();
-				this.parentList.top--;
 			}
 		});
 
