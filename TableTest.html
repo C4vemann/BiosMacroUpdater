@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		</style>
+	</head>
+	<body>
+		<div id="output">
+		</div>
+
+		<script src="MyRow.js"></script>
+		<script src="MyHeaderRow.js"></script>
+		<script src="MyColumn.js"></script>
+		<script src="MyTableHeader.js"></script>
+		<script src="MyTable.js"></script>
+		<script>
+
+			let data = new Array(
+				{
+					id:'000001',
+					name:'First',
+					version:'2.1'
+				},
+				{
+					id:'000002',
+					name:'SecondSecondSecondSecond',
+					version:'2.3'
+				},
+				{
+					id:'000003',
+					name:'Third',
+					version:'3.03.03.03.0'
+				}
+
+			);
+
+			let output = document.getElementById("output");
+
+			let myTable = new MyTable(data);
+
+			output.appendChild(myTable.element);
+		</script>
+	</body>
+</html>
