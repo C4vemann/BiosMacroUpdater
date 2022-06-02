@@ -49,4 +49,21 @@ class MyRegex{
 			return false;
 		}
 	}
+
+	static versionNumberMatcher(str){
+		if(str.length >= 3 && str.length <= 15){
+			let pattern = /^(?:\d{1,})(?:\.(?:\d{1,})){1,}$/;
+			return pattern.test(str);
+		} else {
+			return false;
+		}
+	}
+
+	static nameMatcher(str){
+		if(str.length > 0 && str.length < 25){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

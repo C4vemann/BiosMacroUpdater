@@ -2,38 +2,101 @@
 <html>
 	<head>
 		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#input_wrapper{
+				margin: auto;
+				max-width: fit-content;
+			}
+			#output{
+				margin: auto;
+				max-width: fit-content;
+			}
+			.form_content_wrapper{
+				display: inline-block;
+			}
+			input{
+				display: block;
+			}
+			table,th,td{
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
 		</style>
 	</head>
 	<body>
+		<div id="input_wrapper">
+			<div class="form_content_wrapper">
+				<p>ID</p>
+				<input id="id" type="text">
+			</div>
+			<div class="form_content_wrapper">
+				<p>Name</p>
+				<input id="name" type="text">
+			</div>
+			<div class="form_content_wrapper">
+				<p>Version</p>
+				<input id="version" type="text">
+			</div>
+			<div class="form_content_wrapper">
+				<button id="input_form_button">Add</button>
+			</div>
+		</div>
+
 		<div id="output">
 		</div>
 
-		<script src="MyRow.js"></script>
-		<script src="MyHeaderRow.js"></script>
-		<script src="MyColumn.js"></script>
-		<script src="MyTableHeader.js"></script>
-		<script src="MyTable.js"></script>
+		<script src="MyRegex.js"></script>
+		<script src="./TableComponents/MyRow.js"></script>
+		<script src="./TableComponents/MyRowList.js"></script>
+		<script src="./TableComponents/MyHeaderRow.js"></script>
+		<script src="./TableComponents/MyIdColumn.js"></script>
+		<script src="./TableComponents/MyNameColumn.js"></script>
+		<script src="./TableComponents/MyVersionColumn.js"></script>
+		<script src="./TableComponents/MyTableHeader.js"></script>
+		<script src="./TableComponents/MyTable.js"></script>
 		<script>
 
 			let data = new Array(
 				{
-					id:'000001',
+					id:'0000001',
 					name:'First',
 					version:'2.1'
 				},
 				{
-					id:'000002',
+					id:'0000002',
 					name:'SecondSecondSecondSecond',
 					version:'2.3'
 				},
 				{
-					id:'000003',
+					id:'0000003',
 					name:'Third',
 					version:'3.03.03.03.0'
 				}
 
 			);
 
+			let idInput = document.getElementById("id");
+			let nameInput = document.getElementById("name");
+			let versionInput = document.getElementById("version");
+			let inputFormButton = document.getElementById("input_form_button");
+			inputFormButton.addEventListener("click", () => {
+				console.log("clicked");
+				console.log(idInput.value + " " + MyRegex.itemNumberMatcher(idInput.value));
+				console.log(nameInput.value + " " + MyRegex.nameMatcher(nameInput.value));
+				console.log(versionInput.value + " " + MyRegex.versionNumberMatcher(versionInput.value));
+				if(MyRegex.itemNumberMatcher(idInput.value) && MyRegex.nameMatcher(nameInput.value) && MyRegex.versionNumberMatcher(versionInput.value)){
+					myTable.add(idInput.value, nameInput.value, versionInput.value)
+				} else {
+					return false;
+				}
+
+				idInput.value = "";
+				nameInput.value = "";
+				versionInput.value = "";
+			}, false);
 			let output = document.getElementById("output");
 
 			let myTable = new MyTable(data);
