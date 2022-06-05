@@ -9,7 +9,7 @@ class MyVersionTableHeader{
 		let main = document.createElement("th");
 		main.innerText = value;
 
-		let filterButton = document.createElement("button");
+		/*let filterButton = document.createElement("button");
 		filterButton.innerText = "^";
 		filterButton.addEventListener("click",()=>{
 			let tempList = new Array();
@@ -27,17 +27,13 @@ class MyVersionTableHeader{
 			}
 		},false);
 
-		main.appendChild(filterButton);
+		main.appendChild(filterButton);*/
 		return main;
-	}
-
-	check(x){
-		console.log(x);
 	}
 }
 
 
-function sortTable() {
+/*function sortTable() {
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("myTable");
   switching = true;
@@ -67,4 +63,4 @@ function sortTable() {
       switching = true;
     }
   }
-}
+}*/

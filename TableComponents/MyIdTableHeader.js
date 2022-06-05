@@ -1,58 +1,88 @@
+
+//bug when deleting an entry after filtering it changes the values wierd like so the filtering wont happen again after that deletion
+
+
 class MyIdTableHeader{
 	constructor(z,x){
 		this.parentTable = z;
 		this.value = x;
-		this.element = this.init(this.value);
+
+		this.sort = 0;
+		this.sortButton = this.createSortButton();
+
+		this.element = this.init(this.value,this.sortButton);
 	}
 
-	init(value){
-		let main = document.createElement("th");
-		main.innerText = value;
-
+	createSortButton(){
+		console.log(0);
 		let filterButton = document.createElement("button");
 		filterButton.innerText = "^";
-		filterButton.addEventListener("click",()=>{
-			console.log(this.parentTable.rows.filter(this.check));
-		},false);
+		filterButton.addEventListener("click", () => {
+			if(this.sort == 0){
+				this.sort = 1;
 
-		main.appendChild(filterButton);
+				let p1 = 0;
+				let p2 = 0;
+
+				while(p1 != this.parentTable.rows.list.length && p2 != this.parentTable.rows.list.length){
+					let temp = null;
+					if(this.parentTable.rows.list[p1].x.value <= this.parentTable.rows.list[p2].x.value){
+						p2++;
+					} else {
+
+						temp = this.parentTable.rows.list[p1];
+						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p2] = temp;
+						
+						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
+						
+						p2 = p1;
+						p2++;
+					}
+					if(p2 == this.parentTable.rows.list.length){
+						p1++;
+						p2 = p1;
+					}
+				}
+
+				this.sortButton.innerText = "v";
+			} else {
+				this.sort = 0;
+
+				let p1 = 0;
+				let p2 = 0;
+
+				while(p1 != this.parentTable.rows.list.length && p2 != this.parentTable.rows.list.length){
+					let temp = null;
+					if(this.parentTable.rows.list[p1].x.value >= this.parentTable.rows.list[p2].x.value){
+						p2++;
+					} else {
+						temp = this.parentTable.rows.list[p1];
+						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p2] = temp;
+						
+						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
+						
+						p2 = p1;
+						p2++;
+					}
+					if(p2 == this.parentTable.rows.list.length){
+						p1++;
+						p2 = p1;
+					}
+				}
+
+				this.sortButton.innerText = "^";
+
+			}
+		},false);
+		return filterButton;
+	}
+
+	init(value,sortButton){
+		let main = document.createElement("th");
+		main.innerText = value;
+		main.appendChild(sortButton);
 		return main;
 	}
-
-	check(x){
-		console.log(x);
-	}
-}
-
-
-function sortTable() {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable");
-  switching = true;
- 
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-   
-   
-    for (i = 1; i < (rows.length - 1); i++) {
-
-	  shouldSwitch = false;
-      
-      x = rows[i].getElementsByTagName("TD")[0];
-      y = rows[i + 1].getElementsByTagName("TD")[0];
-      
-      
-      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        
-        shouldSwitch = true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-      
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
 }
