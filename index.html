@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			.option{
+				border:2px solid black;
+				max-width: 400px;
+				cursor: ponter;
+			}
+			.option:hover{
+				background: lightgrey;
+			}
+			#optionList{
+				width: calc(50% - 4px);
+				float: left;
+			}
+			#optionOutput{
+				border: 2px solid black;
+				max-height: fit-content;
+				height: 400px;
+				width: calc(50% - 4px);
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="optionList">
+		</div>
+		<div id="optionOutput">
+			<div id="innerSelectedOption">
+			</div>
+		</div>
+		<script>
+			const optionList = document.getElementById("optionList");
+			const optionOutput = document.getElementById("optionOutput");
+			let currentSelectedOptionId;
+
+			const options = [
+				{
+					optionId:0,
+					optionName:"Z4",
+					optionBiosVersion:"2.75",
+					optionFileName:"Z4.html",
+				},
+				{
+					optionId:1,
+					optionName:"600 G6",
+					optionBiosVersion:"2.10.10",
+					optionFileName:"600G6.html",
+				},
+				{
+					optionId:2,
+					optionName:"5090 Pro",
+					optionBiosVersion:"1.5.0",
+					optionFileName:"5090pro.html",
+				}
+			];
+
+			function textToSaveToFile(x){
+				let text = "<!DOCTYPE html><html><body><div><h1>" + x + "</h1></div></body></html>";
+				return text;
+			}
+			
+			function changeBiosVersion(){
+				options[currentSelectedOptionId].optionBiosVersion = document.getElementById("newBiosVersionInput").value;
+				let text = textToSaveToFile(options[currentSelectedOptionId].optionBiosVersion);
+
+				let dl = document.createElement("a");
+				dl.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+				dl.setAttribute("download", options[currentSelectedOptionId].optionFileName);
+				dl.click();
+
+			}
+
+			function getBiosStuff(){
+				let el = document.createElement("input");
+				el.setAttribute("id", "newBiosVersionInput");
+				el.setAttribute("type", "text");
+				this.parentNode.appendChild(el);
+
+				el = document.createElement("button");
+				el.setAttribute("id", "biosChangeButton");
+				el.innerText = "Change";
+				el.addEventListener("click", changeBiosVersion,false);
+				this.parentNode.appendChild(el);
+			}
+
+			function selectedOption(){
+				currentSelectedOptionId = this.id;
+				let el = document.createElement("div");
+				el.setAttribute("id", "innerSelectedOption");
+				el.setAttribute("class", "selectedOption");
+
+				let textEl = document.createElement("h1");
+				let text = document.createTextNode("Name: " + options[this.id].optionName);
+				textEl.appendChild(text);
+				el.appendChild(textEl);
+
+				textEl = document.createElement("h1");
+				text = document.createTextNode("Bios Version: " + options[this.id].optionBiosVersion);
+				textEl.appendChild(text);
+				el.appendChild(textEl);
+				
+				textEl = document.createElement("h1");
+				text = document.createTextNode("File Location: " + options[this.id].optionFileName);
+				textEl.appendChild(text);
+				el.appendChild(textEl);
+
+				let changeBiosButton = document.createElement("button");
+				changeBiosButton.setAttribute("id", "changeBios");
+				changeBiosButton.innerText = "Change Bios Version";
+				changeBiosButton.addEventListener("click", getBiosStuff, false);
+
+				el.appendChild(changeBiosButton);
+
+				optionOutput.replaceChild(el, optionOutput.firstChild);
+			}
+
+			for(let option of options){
+				let el = document.createElement("div");
+				el.setAttribute("id", option.optionId);
+				el.setAttribute("class", "option");
+
+				el.addEventListener("click",selectedOption,false);
+
+				let textEl = document.createElement("h1");
+				let text = document.createTextNode(option.optionName);
+				textEl.appendChild(text);
+				el.appendChild(textEl);
+
+				optionList.appendChild(el);
+			}
+
+
+			function firstMatch(str){
+				if(str.length > 7 || str.length < 7){
+					return false;
+				} else {
+					let pattern = /[0-9]{7}$/;
+					return (pattern.test(str)) ? true : false;
+				}
+			}
+
+		</script>
+	</body>
+</html>

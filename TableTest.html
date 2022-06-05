@@ -55,23 +55,25 @@
 		<script src="./TableComponents/MyIdColumn.js"></script>
 		<script src="./TableComponents/MyNameColumn.js"></script>
 		<script src="./TableComponents/MyVersionColumn.js"></script>
-		<script src="./TableComponents/MyTableHeader.js"></script>
+		<script src="./TableComponents/MyIdTableHeader.js"></script>
+		<script src="./TableComponents/MyNameTableHeader.js"></script>
+		<script src="./TableComponents/MyVersionTableHeader.js"></script>
 		<script src="./TableComponents/MyTable.js"></script>
 		<script>
 
 			let data = new Array(
 				{
-					id:'0000001',
+					id:'3432893',
 					name:'First',
 					version:'2.1'
 				},
 				{
-					id:'0000002',
+					id:'1212122',
 					name:'SecondSecondSecondSecond',
 					version:'2.3'
 				},
 				{
-					id:'0000003',
+					id:'2032348',
 					name:'Third',
 					version:'3.03.03.03.0'
 				}
@@ -83,10 +85,6 @@
 			let versionInput = document.getElementById("version");
 			let inputFormButton = document.getElementById("input_form_button");
 			inputFormButton.addEventListener("click", () => {
-				console.log("clicked");
-				console.log(idInput.value + " " + MyRegex.itemNumberMatcher(idInput.value));
-				console.log(nameInput.value + " " + MyRegex.nameMatcher(nameInput.value));
-				console.log(versionInput.value + " " + MyRegex.versionNumberMatcher(versionInput.value));
 				if(MyRegex.itemNumberMatcher(idInput.value) && MyRegex.nameMatcher(nameInput.value) && MyRegex.versionNumberMatcher(versionInput.value)){
 					myTable.add(idInput.value, nameInput.value, versionInput.value)
 				} else {
