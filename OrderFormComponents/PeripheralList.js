@@ -51,7 +51,7 @@ class PeripheralList{
 		emptyInput.readOnly = true;
 		emptyInput.addEventListener("change", () => {
 			if(MyRegex.peripheralNumberMatcher(this.emptyInput.value)){
-				this.list.push(new Peripheral(this,this.emptyInput.value));
+				this.list.push(new Peripheral(this,this.emptyInput.value,this.list.length));
 				this.body.appendChild(this.list[this.list.length - 1].element);
 				this.top++;
 				this.emptyInput.value = "";
