@@ -5,10 +5,12 @@ class MyTable{
 		for(let d of data){
 			this.rows.push(d);
 		}
-		this.element = this.init(this.headers,this.rows);
+
+		this.table = this.createView(this.headers,this.rows);
+		this.element = this.init(this.table);
 	}
 
-	init(headers,rows){
+	createView(headers,rows){
 		let main = document.createElement("table");
 
 		main.appendChild(headers.element);
@@ -20,8 +22,17 @@ class MyTable{
 		return main;
 	}
 
+	init(table){
+		let main = document.createElement("div");
+		main.className = "table_wrapper";
+
+		main.appendChild(table);
+
+		return main;
+	}
+
 	add(x,y,z){
 		this.rows.push({id:x,name:y,version:z});
-		this.element.appendChild(this.rows.list[this.rows.list.length - 1].element);
+		this.table.appendChild(this.rows.list[this.rows.list.length - 1].element);
 	}
 }

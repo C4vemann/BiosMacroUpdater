@@ -55,7 +55,6 @@ class MyRow{
 				this.parentList.pop();
 			}
 
-			console.log(this.parentList.list);
 		},false);
 		
 		main.appendChild(deleteButton);
