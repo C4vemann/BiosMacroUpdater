@@ -1,0 +1,113 @@
+<DOCTYPE html>
+<html>
+	<body>
+		<div id="output">
+		</div>
+
+
+		<script src="MyRegex.js"></script>
+		<script src="./TableComponents/MyRow.js"></script>
+		<script src="./TableComponents/MyRowList.js"></script>
+		<script src="./TableComponents/MyHeaderRow.js"></script>
+		<script src="./TableComponents/MyIdColumn.js"></script>
+		<script src="./TableComponents/MyNameColumn.js"></script>
+		<script src="./TableComponents/MyVersionColumn.js"></script>
+		<script src="./TableComponents/MyIdTableHeader.js"></script>
+		<script src="./TableComponents/MyNameTableHeader.js"></script>
+		<script src="./TableComponents/MyVersionTableHeader.js"></script>
+		<script src="./TableComponents/MyTable.js"></script>
+
+		<script>
+			let output = document.getElementById("output");
+
+
+			let data = new Array(
+				{
+					key:0,
+					id:'3323509',
+					name:'Sixth',
+					version:'5.2.3'
+				},
+				{
+					key:1,
+					id:'2032348',
+					name:'Third',
+					version:'2.1'
+				},
+				{
+					key:2,
+					id:'3432893',
+					name:'First',
+					version:'2.1'
+				},
+				{
+					key:3,
+					id:'5678123',
+					name:'Fourth',
+					version:'3.03'
+				},
+				{
+					key:4,
+					id:'2032348',
+					name:'Third',
+					version:'2.1'
+				},
+				{
+					key:5,
+					id:'9875554',
+					name:'Fifth',
+					version:'1.25'
+				},
+				{
+					key:6,
+					id:'2032348',
+					name:'Third',
+					version:'2.1'
+				},
+				{
+					key:7,
+					id:'1212122',
+					name:'Second',
+					version:'2.3'
+				}
+
+			);
+
+			function sortById(){
+				print(data);
+				console.log("\n");
+				console.log("Sort By Id");
+				data.sort((a,b) => (a.id > b.id) ? 1 : -1);
+				print(data);
+			}
+
+			function sortByName(){
+				print(data);
+				console.log("\n");
+				console.log("Sort By Name");
+				data.sort((a,b) => (a.name > b.name) ? 1 : -1);
+				print(data);
+			}
+
+			function sortByVersion(){
+				print(data);
+				console.log("\n");
+				console.log("Sort By Version");
+				data.sort((a,b) => (a.version > b.version) ? 1 : -1);
+				print(data);
+			}
+
+			function print(a){
+				for(let el of a){
+					console.log(el.key + ", " + el.id + ", " + el.name + ", " + el.version);
+				}
+			}
+
+			let table = new MyTable(data);
+			output.appendChild(table.element);
+
+			sortById();
+
+		</script>
+	</body>
+</html>
