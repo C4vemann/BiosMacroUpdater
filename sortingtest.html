@@ -6,16 +6,16 @@
 
 
 		<script src="MyRegex.js"></script>
-		<script src="./TableComponents/MyRow.js"></script>
-		<script src="./TableComponents/MyRowList.js"></script>
-		<script src="./TableComponents/MyHeaderRow.js"></script>
-		<script src="./TableComponents/MyIdColumn.js"></script>
-		<script src="./TableComponents/MyNameColumn.js"></script>
-		<script src="./TableComponents/MyVersionColumn.js"></script>
-		<script src="./TableComponents/MyIdTableHeader.js"></script>
-		<script src="./TableComponents/MyNameTableHeader.js"></script>
-		<script src="./TableComponents/MyVersionTableHeader.js"></script>
-		<script src="./TableComponents/MyTable.js"></script>
+		<script src="./TableComponents1/MyRow.js"></script>
+		<script src="./TableComponents1/MyRowList.js"></script>
+		<script src="./TableComponents1/MyHeaderRow.js"></script>
+		<script src="./TableComponents1/MyIdColumn.js"></script>
+		<script src="./TableComponents1/MyNameColumn.js"></script>
+		<script src="./TableComponents1/MyVersionColumn.js"></script>
+		<script src="./TableComponents1/MyIdTableHeader.js"></script>
+		<script src="./TableComponents1/MyNameTableHeader.js"></script>
+		<script src="./TableComponents1/MyVersionTableHeader.js"></script>
+		<script src="./TableComponents1/MyTable.js"></script>
 
 		<script>
 			let output = document.getElementById("output");
@@ -23,55 +23,47 @@
 
 			let data = new Array(
 				{
-					key:0,
 					id:'3323509',
-					name:'Sixth',
+					name:'a',
 					version:'5.2.3'
 				},
 				{
-					key:1,
 					id:'2032348',
-					name:'Third',
+					name:'a - DF',
 					version:'2.1'
 				},
 				{
-					key:2,
-					id:'3432893',
-					name:'First',
+					id:'4432893',
+					name:'1',
 					version:'2.1'
 				},
 				{
-					key:3,
 					id:'5678123',
-					name:'Fourth',
+					name:'Z',
 					version:'3.03'
 				},
 				{
-					key:4,
-					id:'2032348',
-					name:'Third',
+					id:'6032348',
+					name:'z',
 					version:'2.1'
 				},
 				{
-					key:5,
 					id:'9875554',
-					name:'Fifth',
+					name:'75',
 					version:'1.25'
 				},
 				{
-					key:6,
-					id:'2032348',
-					name:'Third',
+					id:'7032348',
+					name:'Gsdf',
 					version:'2.1'
 				},
 				{
-					key:7,
 					id:'1212122',
-					name:'Second',
+					name:'GSdf',
 					version:'2.3'
 				}
-
 			);
+
 
 			function sortById(){
 				print(data);
@@ -99,14 +91,14 @@
 
 			function print(a){
 				for(let el of a){
-					console.log(el.key + ", " + el.id + ", " + el.name + ", " + el.version);
+					console.log(el.id + ", " + el.name + ", " + el.version);
 				}
 			}
 
 			let table = new MyTable(data);
 			output.appendChild(table.element);
 
-			sortById();
+			//sortById();
 
 		</script>
 	</body>
