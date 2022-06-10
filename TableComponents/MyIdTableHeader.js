@@ -11,10 +11,11 @@ class MyIdTableHeader{
 		this.sortButton = this.createSortButton();
 
 		this.element = this.init(this.value,this.sortButton);
+
+		console.log(this.parentTable);
 	}
 
 	createSortButton(){
-		console.log(0);
 		let filterButton = document.createElement("button");
 		filterButton.innerText = "^";
 		filterButton.addEventListener("click", () => {
@@ -32,7 +33,9 @@ class MyIdTableHeader{
 
 						temp = this.parentTable.rows.list[p1];
 						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p1].id = p1;
 						this.parentTable.rows.list[p2] = temp;
+						this.parentTable.rows.list[p2].id = p2;
 						
 						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
 						
@@ -59,8 +62,10 @@ class MyIdTableHeader{
 					} else {
 						temp = this.parentTable.rows.list[p1];
 						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p1].id = p1;
 						this.parentTable.rows.list[p2] = temp;
-						
+						this.parentTable.rows.list[p2].id = p2;
+
 						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
 						
 						p2 = p1;
@@ -75,6 +80,9 @@ class MyIdTableHeader{
 				this.sortButton.innerText = "^";
 
 			}
+
+			this.parentTable.rows.print();
+
 		},false);
 		return filterButton;
 	}

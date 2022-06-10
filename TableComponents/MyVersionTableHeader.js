@@ -2,65 +2,93 @@ class MyVersionTableHeader{
 	constructor(z,x){
 		this.parentTable = z;
 		this.value = x;
-		this.element = this.init(this.value);
+
+		this.sort = 0;
+		this.sortButton = this.createSortButton();
+
+		this.element = this.init(this.value,this.sortButton);
 	}
 
-	init(value){
+
+	createSortButton(){
+		let filterButton = document.createElement("button");
+		filterButton.innerText = "^";
+		filterButton.addEventListener("click", () => {
+			if(this.sort == 0){
+				this.sort = 1;
+
+				let p1 = 0;
+				let p2 = 0;
+
+				while(p1 != this.parentTable.rows.list.length && p2 != this.parentTable.rows.list.length){
+					let temp = null;
+					if(this.parentTable.rows.list[p1].z.value <= this.parentTable.rows.list[p2].z.value){
+						p2++;
+					} else {
+
+						temp = this.parentTable.rows.list[p1];
+						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p1].id = p1;
+						this.parentTable.rows.list[p2] = temp;
+						this.parentTable.rows.list[p2].id = p2;
+						
+						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
+						
+						p2 = p1;
+						p2++;
+					}
+					if(p2 == this.parentTable.rows.list.length){
+						p1++;
+						p2 = p1;
+					}
+				}
+
+				this.sortButton.innerText = "v";
+			} else {
+				this.sort = 0;
+
+				let p1 = 0;
+				let p2 = 0;
+
+				while(p1 != this.parentTable.rows.list.length && p2 != this.parentTable.rows.list.length){
+					let temp = null;
+					if(this.parentTable.rows.list[p1].z.value >= this.parentTable.rows.list[p2].z.value){
+						p2++;
+					} else {
+						temp = this.parentTable.rows.list[p1];
+						this.parentTable.rows.list[p1] = this.parentTable.rows.list[p2];
+						this.parentTable.rows.list[p1].id = p1;
+						this.parentTable.rows.list[p2] = temp;
+						this.parentTable.rows.list[p2].id = p2;
+
+						this.parentTable.rows.list[p1].element.parentNode.insertBefore(this.parentTable.rows.list[p1].element,this.parentTable.rows.list[p2].element);
+						
+						p2 = p1;
+						p2++;
+					}
+					if(p2 == this.parentTable.rows.list.length){
+						p1++;
+						p2 = p1;
+					}
+				}
+
+				this.sortButton.innerText = "^";
+
+			}
+
+			this.parentTable.rows.print();
+
+		},false);
+		return filterButton;
+	}
+
+
+
+
+	init(value,sortButton){
 		let main = document.createElement("th");
 		main.innerText = value;
-
-		/*let filterButton = document.createElement("button");
-		filterButton.innerText = "^";
-		filterButton.addEventListener("click",()=>{
-			let tempList = new Array();
-			let temp = '0';
-
-			for(let i = 0; i < this.parentTable.rows.list.length; i++){
-				console.log(tempList);
-				console.log(temp);
-				let temp2 = this.parentTable.rows.list[i].z.value.split(".");
-				let temp3 = temp.split(".");
-				console.log(temp2);
-				console.log(temp3);
-
-				//console.log(this.parentTable.rows.list[i].z.value + " " + this.parentTable.rows.list[i + 1].z.value);
-			}
-		},false);
-
-		main.appendChild(filterButton);*/
+		main.appendChild(sortButton);
 		return main;
 	}
 }
-
-
-/*function sortTable() {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("myTable");
-  switching = true;
- 
-  while (switching) {
-    switching = false;
-    rows = table.rows;
-   
-   
-    for (i = 1; i < (rows.length - 1); i++) {
-
-	  shouldSwitch = false;
-      
-      x = rows[i].getElementsByTagName("TD")[0];
-      y = rows[i + 1].getElementsByTagName("TD")[0];
-      
-      
-      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-        
-        shouldSwitch = true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-      
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
-}*/

@@ -13,5 +13,11 @@ class MyRowList{
 		this.list.pop();
 		this.top--;
 	}
-
+	print(){
+		let string = "";
+		for(let el of this.list){
+			string += "(" + el.id + " , "  + el.x.value + ") : ";
+		}
+		console.log(string);
+	}
 }

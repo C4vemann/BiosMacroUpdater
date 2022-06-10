@@ -40,12 +40,13 @@ class MyRow{
 		let deleteButton = document.createElement("button");
 		deleteButton.innerText = "X";
 		deleteButton.addEventListener("click",()=>{
-
 			if(this.parentList.top <= 0){
 				console.log("List too small");
 			} else{
 				this.element.remove();
 
+				//its when arr[x].id + 1 != arr[x+1].id
+				//the id must be the objects place in the array
 				for(let x = this.id; x < this.parentList.list.length; x++){
 					if(this.parentList.list[x+1] != null){
 						this.parentList.list[x] = this.parentList.list[x+1];
@@ -54,6 +55,7 @@ class MyRow{
 				}
 				this.parentList.pop();
 			}
+			this.parentList.print();
 
 		},false);
 		
