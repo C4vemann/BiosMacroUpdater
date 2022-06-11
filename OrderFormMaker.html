@@ -12,6 +12,7 @@
 		<div id="temp">
 			<p>Order #: <span id="order_number"></span></p>
 			<p>Item #: <span id="item_number"></span></p>
+			<p>Version #: <span id="version_number"></span></p>
 			<p>Serial #: <span id="serial_number"></span></p>
 			<p>Asset #: <span id="asset_number"></span></p>
 			<p>Peripherals: <span id="peripheral_numbers"></span></p>
@@ -27,13 +28,17 @@
 		<script src="./OrderFormComponents/ItemNumber.js"></script>
 		<script src="./OrderFormComponents/SerialNumber.js"></script>
 		<script src="./OrderFormComponents/AssetNumber.js"></script>
+		<script src="./OrderFormComponents/VersionNumber.js"></script>
 		<script src="./OrderFormComponents/PeripheralList.js"></script>
 		<script src="./OrderFormComponents/Peripheral.js"></script>
 		<script src="MyRegex.js"></script>
+		<script src="MachineInfo.js"></script>
+
 		<script>
 
 			let orderNumber = document.getElementById("order_number");
 			let itemNumber = document.getElementById("item_number");
+			let versionNumber = document.getElementById("version_number");
 			let serialNumber = document.getElementById("serial_number");
 			let assetNumber = document.getElementById("asset_number");
 			let peripheralNumbers = document.getElementById("peripheral_numbers");
@@ -47,6 +52,7 @@
 			reset.addEventListener("click", () => {
 				orderNumber.innerText = "";
 				itemNumber.innerText = "";
+				versionNumber.innerText = "";
 				serialNumber.innerText = "";
 				assetNumber.innerText = "";
 				peripheralNumbers.innerText = "";
@@ -61,26 +67,35 @@
 			let output = document.getElementById("output");
 			let orderList = new OrderList();
 
-			orderList.push("123456","2306184","F4F4F4F", "ITE00001234",["N3N3N3N3N3N3","H2H2H2H2H2H2"]);
-			orderList.push("123457","2306184","G6G6G6G", "ITE00001235",[]);
-			orderList.push("123458","2306184","Z9Z9Z9Z", "ITE00001236",[]);
-			orderList.push("222228","3333333","J2J2J2J", "ITE00001237",[]);
+			orderList.push("123456","2032348","4.25","F4F4F4F", "ITE00001234",["N3N3N3N3N3N3","H2H2H2H2H2H2"]);
+
 
 
 			for(let obj of orderList.list){
 				output.appendChild(obj.element);
 			}
 
+			function findBiosVersion(){
+				for(let obj of machineInfo){
+					if(itemNumber.innerText == obj.id){
+						return obj.version;
+					}
+				}
+				return null;
+			}
+
 			function func1(){
 
 				if(MyRegex.orderNumberMatcher(this.value)){
 
-					if(orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' &&  assetNumber.innerText != ''){
-						orderList.push(orderNumber.innerText,itemNumber.innerText, serialNumber.innerText, assetNumber.innerText,peripheralValues);
+					if(orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' && versionNumber.innerText != '' &&  assetNumber.innerText != ''){
+
+						orderList.push(orderNumber.innerText,itemNumber.innerText,versionNumber.innerText, serialNumber.innerText, assetNumber.innerText,peripheralValues);
 						output.appendChild(orderList.list[orderList.list.length - 1].element);
 
 						orderNumber.innerText = "";
 						itemNumber.innerText = "";
+						versionNumber.innerText = "";
 						serialNumber.innerText = "";
 						assetNumber.innerText = "";
 						peripheralNumbers.innerText = "";
@@ -91,6 +106,7 @@
 
 				} else if(MyRegex.itemNumberMatcher(this.value) && orderNumber.innerText != ''){
 					itemNumber.innerText = this.value;
+					versionNumber.innerText = findBiosVersion();
 				} else if(MyRegex.serialNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText == ''){
 					serialNumber.innerText = this.value;
 				} else if(MyRegex.assetNumberMatcher(this.value) && orderNumber.innerText != '' && itemNumber.innerText != '' && serialNumber.innerText != '' && assetNumber.innerText == ''){

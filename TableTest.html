@@ -48,6 +48,8 @@
 		<div id="output">
 		</div>
 
+		<button id="doneButton">Make List</button>
+
 		<script src="MyRegex.js"></script>
 		<script src="./TableComponents/MyRow.js"></script>
 		<script src="./TableComponents/MyRowList.js"></script>
@@ -59,26 +61,20 @@
 		<script src="./TableComponents/MyNameTableHeader.js"></script>
 		<script src="./TableComponents/MyVersionTableHeader.js"></script>
 		<script src="./TableComponents/MyTable.js"></script>
+		<script src="MachineInfo.js"></script>
 		<script>
 
-			let data = new Array(
-				{
-					id:'3432893',
-					name:'First',
-					version:'2.1'
-				},
-				{
-					id:'1212122',
-					name:'SecondSecondSecondSecond',
-					version:'2.3'
-				},
-				{
-					id:'2032348',
-					name:'Third',
-					version:'3.03.03.03.0'
-				}
 
-			);
+			document.getElementById("doneButton").addEventListener("click", () => {
+				let string = myTable.toString();
+
+				let dl = document.createElement("a");
+
+				dl.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(string));
+
+				dl.setAttribute("download", "MachineInfo.js");
+				dl.click();
+			});
 
 			let idInput = document.getElementById("id");
 			let nameInput = document.getElementById("name");
@@ -97,7 +93,7 @@
 			}, false);
 			let output = document.getElementById("output");
 
-			let myTable = new MyTable(data);
+			let myTable = new MyTable(machineInfo);
 
 			output.appendChild(myTable.element);
 		</script>

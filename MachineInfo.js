@@ -1,0 +1,1 @@
+let machineInfo = new Array({id:'2032348',name:'Angela',version:'4.25',},{id:'3432893',name:'Joey',version:'2.069',},{id:'1212122',name:'Maria',version:'6.59',},);
