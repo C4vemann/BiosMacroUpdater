@@ -63,4 +63,15 @@ class MyRow{
 		
 		return main;
 	}
+
+	toString(){
+		let str = "{";
+
+		str += "id:'" + this.x.value + "',";
+		str += "name:'" + this.y.value + "',";
+		str += "version:'" + this.z.value + "',";
+		str += "},";
+
+		return str;
+	}
 }

@@ -35,4 +35,15 @@ class MyTable{
 		this.rows.push({id:x,name:y,version:z});
 		this.table.appendChild(this.rows.list[this.rows.list.length - 1].element);
 	}
+
+	toString(){
+		let str = "let machineInfo = new Array(";
+
+		for(let row of this.rows.list){
+			str += row.toString();
+		}
+
+		str += ");"
+		return str;
+	}
 }
