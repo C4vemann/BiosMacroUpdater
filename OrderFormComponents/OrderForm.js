@@ -1,6 +1,7 @@
 class OrderForm{
 	
-	constructor(list,id,x,y,z,a,b){
+	constructor(list,id,x,y,v,z,a,b){
+
 		this.isEditing = false;
 
 		this.parentList = list;
@@ -8,14 +9,15 @@ class OrderForm{
 		this.formId = new OrderFormId(id);
 		this.orderNumber = new OrderNumber(x);
 		this.itemNumber = new ItemNumber(y);
+		this.versionNumber = new VersionNumber(v);
 		this.serialNumber = new SerialNumber(z);
 		this.assetNumber = new AssetNumber(a);
 		this.peripherals = new PeripheralList(b);
 		
-		this.element = this.init(this.formId, this.orderNumber,this.itemNumber,this.serialNumber,this.assetNumber,this.peripherals);
+		this.element = this.init(this.formId, this.orderNumber,this.itemNumber, this.versionNumber,this.serialNumber,this.assetNumber,this.peripherals);
 	}
 
-	init(id, x,y,z,a,b){
+	init(id, x,y,v,z,a,b){
 		let main = document.createElement("div");
 		main.className = "order_container";
 
@@ -51,6 +53,7 @@ class OrderForm{
 		body.className = "order_body";
 		body.appendChild(x.element);
 		body.appendChild(y.element);
+		body.appendChild(v.element);
 		body.appendChild(z.element);
 		body.appendChild(a.element);
 		body.appendChild(b.element);
@@ -63,6 +66,7 @@ class OrderForm{
 				this.isEditing = false;
 				this.orderNumber.input.readOnly = true;
 				this.itemNumber.input.readOnly = true;
+				this.versionNumber.input.readOnly = true;
 				this.serialNumber.input.readOnly = true;
 				this.assetNumber.input.readOnly = true;
 				for(let x of this.peripherals.list){
@@ -74,6 +78,7 @@ class OrderForm{
 				this.isEditing = true;
 				this.orderNumber.input.readOnly = false;
 				this.itemNumber.input.readOnly = false;
+				this.versionNumber.input.readOnly = false;
 				this.serialNumber.input.readOnly = false;
 				this.assetNumber.input.readOnly = false;
 				for(let x of this.peripherals.list){
