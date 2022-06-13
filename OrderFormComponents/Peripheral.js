@@ -55,4 +55,28 @@ class Peripheral{
 		return main;
 	}
 
+	print(){
+		let string = ``;
+
+   		string += `<screen name="Screen9" entryscreen="false" exitscreen="false" transient="false">
+        <description >
+            <oia status="NOTINHIBITED" optional="false" invertmatch="false" />
+            <numfields number="165" optional="true" invertmatch="false" />
+            <numinputfields number="7" optional="true" invertmatch="false" />
+        </description>
+        <actions>
+            <input value="`;
+
+         string += this.value;
+
+         string += `[enter]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
+        </actions>
+        <nextscreens timeout="0" >
+            <nextscreen name="Screen10" />
+        </nextscreens>
+    </screen>`;
+
+		return string;
+	}
+
 }

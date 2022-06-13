@@ -37,4 +37,21 @@ class OrderNumber{
 		return main;
 	}
 
+	print(){
+		let string = ``;
+		string += `<screen name="Screen1" entryscreen="true" exitscreen="false" transient="false">
+        <description >
+            <oia status="NOTINHIBITED" optional="false" invertmatch="false" />
+        </description>
+        <actions>
+            <input value="`;
+        string += this.value;
+        string += `[enter]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
+        </actions>
+        <nextscreens timeout="0" >
+            <nextscreen name="Screen2" />
+        </nextscreens>
+    </screen>`;
+		return string;
+	}
 }

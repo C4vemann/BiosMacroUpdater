@@ -66,4 +66,14 @@ class PeripheralList{
 		this.list.pop();
 		this.top--;
 	}
+
+	print(){
+		let string = ``;
+
+		for(let el of this.list){
+			string += el.print();
+		}
+
+		return string;
+	}
 }

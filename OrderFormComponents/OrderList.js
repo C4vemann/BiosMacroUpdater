@@ -31,4 +31,13 @@ class OrderList{
 		}
 		console.log(this.list);
 	}
+
+	print(){
+		let string = `<HAScript name="Script" description="" timeout="60000" pausetime="300" promptall="true" blockinput="true" author="nyconfig" creationdate="Jun 13, 2022 1:13:47 PM" supressclearevents="false" usevars="false" ignorepauseforenhancedtn="true" delayifnotenhancedtn="0" ignorepausetimeforenhancedtn="true" continueontimeout="false">`;
+		for(let el of this.list){
+			string += el.print();
+		}
+		string += `</HAScript>`;
+		return string;
+	}
 }
