@@ -61,7 +61,14 @@
 
 			let done = document.getElementById("done_button");
 			done.addEventListener("click", () => {
-				console.log(orderList);
+				let string = orderList.print();
+				let dl = document.createElement("a");
+
+				dl.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(string));
+
+				dl.setAttribute("download", "Script.mac");
+				dl.click();
+
 			});
 
 			let output = document.getElementById("output");
