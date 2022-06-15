@@ -37,27 +37,4 @@ class VersionNumber{
 		return main;
 	}
 
-	print(){
-		let string = ``;
-
-		string += `<screen name="Screen12" entryscreen="false" exitscreen="true" transient="false">
-        <description >
-            <oia status="NOTINHIBITED" optional="false" invertmatch="false" />
-            <numfields number="43" optional="true" invertmatch="false" />
-            <numinputfields number="3" optional="true" invertmatch="false" />
-        </description>
-        <actions>
-            <input value="y`;
-
-         string += this.value;
-
-         string += `[enter]" row="0" col="0" movecursor="true" xlatehostkeys="true" encrypted="false" />
-        </actions>
-        <nextscreens timeout="0" >
-        </nextscreens>
-    </screen>`;
-
-		return string;
-	}
-
 }
