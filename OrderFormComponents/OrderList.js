@@ -205,7 +205,19 @@ class OrderList{
 			</screen>`;
 
 			string += 
-			`<screen name="Screen${screenCount++}" entryscreen="false" exitscreen="true" transient="false">
+			`<screen name="Screen${screenCount++}" entryscreen="false"`;
+
+
+			if(i != this.list.length-1){
+				string += `exitscreen="false"`;
+			} else {
+				string += `exitscreen="true"`;
+			}
+
+			  
+
+
+			 string += `transient="false">
 				<description >
 					<oia status="NOTINHIBITED" optional="false" invertmatch="false" />
 					<numfields number="43" optional="true" invertmatch="false" />
