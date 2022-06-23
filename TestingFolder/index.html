@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<script>
+
+			function func(t,v){
+				function f(){
+					let x = document.createElement("p");
+					x.innerText = "ffff";
+					return x;
+				}
+				return {
+					texting:t,
+					value:v,
+					element:f(),
+					init: (text,value) => {
+						let el = document.createElement("p");
+						el.innerText = text + " " + value;
+						return el;
+					},
+					changeElement: (element) => {
+						element.innerText = "schloop";
+					}
+				}
+			}
+
+			let body = document.getElementsByTagName("body")[0];
+
+			let x = func('poop',45);
+
+			body.appendChild(x.element);
+
+			x.changeElement(x.element);
+
+
+		</script>
+	</body>
+</html>
