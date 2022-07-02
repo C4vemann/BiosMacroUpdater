@@ -6,36 +6,320 @@
 	</head>
 
 	<body>
+		<script src="./MyRegex.js"></script>
 		<script>
 
-			function func(t,v){
-				function f(){
-					let x = document.createElement("p");
-					x.innerText = "ffff";
-					return x;
+			function TextComponent(text){
+				let element = init();
+
+				function init(){
+					let main = document.createElement("p");
+					main.innerText = text;
+					return main;
+				}
+
+				function changeValue(){
+					element.innerText = text;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					changeValue, 
+					getElement
+				}
+			}
+
+			function InputComponent(value,type){
+				let element = init();
+
+				function init(){
+					let main = document.createElement("input");
+					main.value = value;
+					main.dataset.type = type;
+					main.readOnly = false;
+					main.addEventListener("change", () => {
+						switch(main.dataset.type){
+							case 'order':
+								(MyRegex.orderNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							case 'item':
+								(MyRegex.itemNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							case 'version':
+								(MyRegex.versionNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							case 'serial':
+								(MyRegex.serialNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							case 'asset':
+								(MyRegex.assetNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							case 'peripheral':
+								(MyRegex.peripheralNumberMatcher(main.value)) ? true : main.value = '';
+								break;
+							default: break;
+						}
+					});
+					return main;
+				}
+
+				function getValue(){
+					return element.value;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					getElement,
+					getValue
+				}
+			}
+
+
+			function OrderFormComponent(text,value,type){
+				let textComponent = TextComponent(text);
+				let inputComponent = InputComponent(value,type);
+				let element = init();
+
+				function init(){
+					let main = document.createElement("div");
+					main.appendChild(textComponent.getElement());
+					main.appendChild(inputComponent.getElement());
+					return main;
+				}
+
+				function getValue(){
+					return inputComponent.getValue();
+				}
+
+				function getElement(){
+					return element;
 				}
 				return {
-					texting:t,
-					value:v,
-					element:f(),
-					init: (text,value) => {
-						let el = document.createElement("p");
-						el.innerText = text + " " + value;
-						return el;
-					},
-					changeElement: (element) => {
-						element.innerText = "schloop";
+					getValue,
+					getElement,
+				}
+			}
+
+			function OrderFormComponentList(text,list,type){
+				let textComponent = TextComponent(text);
+				let inputComponentList = [];
+				if(list.length > 0){
+					list.forEach((item) => {
+						inputComponentList.push(InputComponent(item,type));
+					});
+				}
+				let body = getBody();
+				let element = init();
+
+				function getBody(){
+					let main = document.createElement("div");
+					inputComponentList.forEach((item) => {
+						main.appendChild(createInput(item));
+					});
+					return main;
+				}
+
+				function createInput(item){
+					let main = document.createElement("div");
+					main.appendChild(item.getElement());
+
+					let button = document.createElement("button");
+					button.innerText = "X";
+					button.addEventListener("click", () => {
+						let i = 0;
+						for(i; i < inputComponentList.length; i++){
+							if(item === inputComponentList[i]){
+								break;
+							}
+						}
+
+						for(i; i < inputComponentList.length;i++){
+							if(inputComponentList[i+1] == null){
+								break;
+							}
+							inputComponentList[i] = inputComponentList[i+1];
+						}
+
+						inputComponentList.pop();
+						main.remove();
+					});
+
+					main.appendChild(button);
+					return main;
+				}
+
+				function init(){
+					let main = document.createElement("div");
+					main.appendChild(textComponent.getElement());
+					
+					main.appendChild(body);
+					
+					let input = document.createElement("input");
+					input.value = '';
+					input.dataset.type = type;
+					input.readOnly = false;
+					input.addEventListener("change", () => {
+						if(MyRegex.peripheralNumberMatcher(input.value)){
+							inputComponentList.push(InputComponent(input.value,'peripheral'));
+							body.appendChild(createInput(inputComponentList[inputComponentList.length-1]));
+							input.value = '';
+						} else {
+							input.value = '';
+						} 
+					});
+
+					main.appendChild(input);
+
+					return main;
+				}
+
+				function getList(){
+					let temp = [];
+					inputComponentList.forEach((item,index)=>{
+						temp[index] = item.getValue();
+					});
+					return temp;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					getList,
+					getElement
+				}
+
+			}
+
+			function OrderForm(a,b,c,d,e,f){
+				let order = OrderFormComponent('Order #: ', a, 'order');
+				let item = OrderFormComponent('Item #: ', b, 'item');
+				let version = OrderFormComponent('Version #: ', c, 'version');
+				let serial = OrderFormComponent('Serial #: ', d, 'serial');
+				let asset = OrderFormComponent('Asset #: ', e, 'asset');
+				let peripherals = OrderFormComponentList('Peripherals: ', f, 'peripheral');
+				let element = init();
+
+
+				function printValues(){
+					return {
+						'order: ':order.getValue(),
+						'item: ':item.getValue(),
+						'version: ':version.getValue(),
+						'serial: ':serial.getValue(),
+						'asset: ':asset.getValue(),
+						'peripherals':peripherals.getList()
+					};
+				}
+
+				function init(){
+					let main = document.createElement("div");
+					main.appendChild(order.getElement());
+					main.appendChild(asset.getElement());
+					main.appendChild(serial.getElement());
+					main.appendChild(item.getElement());
+					main.appendChild(version.getElement());
+					main.appendChild(peripherals.getElement());
+
+					return main;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					printValues,
+					getElement
+				}
+			}
+
+			function OrderFormList(){
+				let orderList = [];
+				let element = init();
+
+				function init(){
+					let main = document.createElement("div");
+					return main;
+				}
+
+				function addEntry(form){
+					orderList.push(form);
+					let main = document.createElement("div");
+					main.appendChild(TextComponent(orderList.length + ".").getElement());
+
+					let button = document.createElement("button");
+					button.innerText = "X";
+					button.addEventListener("click", () => {
+
+
+						//its deleting the wrong one because it doesnt know what form it is because its cleared from memory already
+						let i = 0;
+						for(i; i < orderList.length; i++){
+							if(form === orderList[i]){
+								break;
+							}
+						}
+						for(i; i < orderList.length;i++){
+							if(orderList[i+1] == null){
+								break;
+							}
+							orderList[i] = orderList[i+1];
+						}
+
+
+
+
+						orderList.pop();
+						main.remove();
+					});
+
+					main.appendChild(button);
+
+					main.appendChild(orderList[orderList.length-1].getElement());
+
+					element.appendChild(main);
+					return main;
+				}
+
+				function getList(){
+					let temp = [];
+					if(orderList.length > 0){
+						orderList.forEach((item,index)=>{
+							temp[index] = item.printValues();
+						});
 					}
+					return temp;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					getList,
+					getElement,
+					addEntry
 				}
 			}
 
 			let body = document.getElementsByTagName("body")[0];
 
-			let x = func('Hello World',45);
+			let orderFormList = OrderFormList();
 
-			body.appendChild(x.element);
+			let orderForm1 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
+			let orderForm2 = OrderForm('002','5555','6666','32323','2.2.2',[1,2,3,4]);
 
-			x.changeElement(x.element);
+			body.appendChild(orderFormListdddd.getElement());
+			orderFormList.addEntry(orderForm1);
+			orderFormList.addEntry(orderForm2);
 
 
 		</script>
