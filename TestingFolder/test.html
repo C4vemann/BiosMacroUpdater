@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			*{
+				clear: both;
+			}
+			button{
+				float: left;
+			}
+			div{
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+
+	<body>
+		<script>
+			function TextComponent(text){
+				let isEditable = false;
+				let element = init();
+
+				function init(){
+					let main = document.createElement("p");
+					main.innerText = text;
+					return main;
+				}
+
+				function changeValue(){
+					element.innerText = text;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				function toggleEdit(){
+					if(isEditable){
+						isEditable = false;
+					} else {
+						isEditable = true;
+					}
+				}
+
+				return {
+					changeValue, 
+					getElement,
+					toggleEdit
+				}
+			}
+
+			function InputComponent(value,type){
+				let isEditable = false;
+				let element = init();
+
+				function init(){
+					let main = document.createElement("input");
+					main.value = value;
+					main.dataset.type = type;
+					main.readOnly = false;
+					main.addEventListener("change", () => {
+					});
+					return main;
+				}
+
+				function getValue(){
+					return element.value;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				function toggleEdit(){
+					if(isEditable){
+						isEditable = false;
+					} else {
+						isEditable = true;
+					}
+				}
+
+				return {
+					getElement,
+					getValue,
+					toggleEdit
+				}
+			}
+
+
+			function List(title,options){
+				let textComponent = TextComponent(title);
+				let list = [];
+				let isEditable = false;
+				let element = init();
+
+				function init(){
+					let main = document.createElement("div");
+					main.appendChild(textComponent.getElement());
+
+						options.forEach((option)=>{
+							if(option == "SAFE_EDIT"){
+								let button = document.createElement("button");
+								button.innerText = "EDIT";
+								button.addEventListener("click", () => {
+									if(isEditable){
+										isEditable = false;
+										list.forEach((item)=>{
+											item.toggleEdit();
+										});
+										button.innerText = "EDIT";
+									} else {
+										isEditable = true;	
+										list.forEach((item)=>{
+											item.toggleEdit();
+										});
+										button.innerText = "SAVE";
+									} 
+								});
+								main.appendChild(button);
+							}
+							if(option == "UNSAFE_EDIT"){
+								isEditable = true;
+							}
+						});
+					return main;
+				}
+
+				function addEntry(item){
+					list.push(item);
+					let main = document.createElement("div");
+
+
+					if(options != null){
+						options.forEach((option)=>{
+							if(option == "DELETABLE"){
+								let button = document.createElement("button");
+								button.innerText = "X";
+								button.addEventListener("click", () => {
+									if(isEditable){
+										let i = 0;
+										for(i; i < list.length; i++){
+											if(item === list[i]){
+												break;
+											}
+										}
+
+										for(i; i < list.length; i++){
+											if(list[i+1] == null){
+												break;
+											}
+											list[i] = list[i+1];
+										}
+
+										list.pop();
+										main.remove();
+									}
+								});
+								main.appendChild(button);
+							}
+						});
+					}
+
+					main.appendChild(item.getElement());
+					element.appendChild(main);
+				}
+
+				function getList(){
+					return list;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				function toggleEdit(){
+					if(isEditable){
+						isEditable = false;
+					} else {
+						isEditable = true;	
+					} 
+				}
+				return{
+					getList,
+					getElement,
+					addEntry,
+					toggleEdit
+				}
+			}
+
+			let list = List("List 1",["SAFE_EDIT"]);
+			let innerList = List("Inner List", ["DELETABLE"]);
+			let innerList2 = List("Inner List 2", ["DELETABLE"]);
+
+
+			document.getElementsByTagName("body")[0].appendChild(list.getElement());
+			list.addEntry(TextComponent("EAZY"),[]);
+
+
+
+			innerList.addEntry(InputComponent("one",""));
+			innerList.addEntry(InputComponent("two",""));
+
+			innerList2.addEntry(InputComponent("1",""));
+			innerList2.addEntry(InputComponent("2",""));
+			
+			list.addEntry(innerList);
+			list.addEntry(innerList2);
+
+			//list.addEntry(Item2());
+
+		</script>
+	</body>
+</html>
