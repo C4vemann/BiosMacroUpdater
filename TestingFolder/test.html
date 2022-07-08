@@ -27,12 +27,6 @@
 				padding: 0;
 				margin: 0;
 			}
-			.outer_list_edit_button{
-				cursor: pointer;
-				background: none;
-				border: none;
-				font-size: 16px;
-			}
 			.outer_list_edit_button:hover{
 				background: black;
 				color: white;
@@ -40,6 +34,7 @@
 			.outer_list_body{
 				display: flex;
 				flex-direction: row;
+				flex-wrap: wrap;
 				justify-content: space-around;
 				padding: 5px;
 				min-width: fit-content;
@@ -53,11 +48,17 @@
 				margin: 0;
 				padding: 0;
 			}
-			.outer_list_item_header_text{
+/*			.outer_list_item_header_text{
 				margin: 0;
 				padding: 0;
 				float: left;
 				font-size: 20px;
+			}
+			.outer_list_edit_button{
+				cursor: pointer;
+				background: none;
+				border: none;
+				font-size: 16px;
 			}
 			.outer_list_delete_button{
 				float: right;
@@ -65,7 +66,7 @@
 				background: none;
 				border: none;
 				cursor: pointer;
-			}
+			}*/
 			.outer_list_delete_button:hover{
 				background: black;
 				color: white;
@@ -73,39 +74,35 @@
 			.outer_list_item_body{
 				clear: both;
 			}
-			.inner_list_item_header{
-				float: left;
-			}
-			.inner_list_item_body{
-				float: right;
-			}
 
 		</style>
 	</head>
 
 	<body>
 		<script src="TextComponent.js"></script>
+		<script src="OrderFormComponent.js"></script>
+		<script src="OrderForm.js"></script>
+		<script src="TextComponent.js"></script>
 		<script src="InputComponent.js"></script>
 		<script src="List.js"></script>
+		<script src="MyRegex.js"></script>
 		<script>
 
-			let list = List("My List Of Objects","Listing all my objects","outer_list",["DELETABLE","SAFE_EDIT","ITEM_HEADER"]);
-			let innerList = List("Peripherals:","","inner_list",["DELETABLE"]);
-			let innerList2 = List("Peripherals:","","inner_list",["DELETABLE"]);
+			let list = List("Order Form List","","outer_list");
+			let form = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
+			let form1 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
+			let form2 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
+			let form3 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
+			let form4 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
 
 
 			document.getElementsByTagName("body")[0].appendChild(list.getElement());
-
-
-
-			innerList.addEntry(InputComponent("one","",""));
-			innerList.addEntry(InputComponent("two","",""));
-
-			innerList2.addEntry(InputComponent("1",""));
-			innerList2.addEntry(InputComponent("2",""));
 			
-			list.addEntry(innerList);
-			list.addEntry(innerList2);
+			list.addEntry(form,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
+			list.addEntry(form1,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
+			list.addEntry(form2,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
+			list.addEntry(form3,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
+			list.addEntry(form4,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
 
 
 

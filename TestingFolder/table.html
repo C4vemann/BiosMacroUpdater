@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+		</style>
+	</head>
+
+	<body>
+		<script>
+
+			function Table(){
+				let headers = [];
+				let rows = [];
+
+			}
+
+			function Data(data){
+				let element = init();
+
+				function init(){
+					let main = document.createElement("td");
+					main.innerText = data;
+					return main;
+				}
+
+				function getData(){
+					return main.innerText;
+				}
+
+				function getElement(){
+					return element;
+				}
+
+				return {
+					getData,
+					getElement
+				}
+			}	
+
+			function Row(list){
+				let element = init();
+
+				init(){
+					let main = document.createElement("tr");
+
+					
+				}
+			}
+
+		</script>
+	</body>
+</html>

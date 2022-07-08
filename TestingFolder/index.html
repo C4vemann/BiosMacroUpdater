@@ -259,8 +259,6 @@
 					button.innerText = "X";
 					button.addEventListener("click", () => {
 
-
-						//its deleting the wrong one because it doesnt know what form it is because its cleared from memory already
 						let i = 0;
 						for(i; i < orderList.length; i++){
 							if(form === orderList[i]){
@@ -317,7 +315,7 @@
 			let orderForm1 = OrderForm('001','5555','6666','32323','2.2.2',[1,2,3,4]);
 			let orderForm2 = OrderForm('002','5555','6666','32323','2.2.2',[1,2,3,4]);
 
-			body.appendChild(orderFormListdddd.getElement());
+			body.appendChild(orderFormList.getElement());
 			orderFormList.addEntry(orderForm1);
 			orderFormList.addEntry(orderForm2);
 
