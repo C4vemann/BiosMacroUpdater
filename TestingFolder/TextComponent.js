@@ -14,11 +14,8 @@ function TextComponent(text,className){
 		return element;
 	}
 	function toggleEdit(){
-		if(isEditable){
-			isEditable = false;
-		} else {
-			isEditable = true;
-		}
+		(isEditable) ? isEditable = false : isEditable = true;	
+
 	}
 	return {
 		changeValue, 

@@ -44,7 +44,6 @@ function InputComponent(value,type){
 
 	function toggleEdit(){
 		(isEditable) ? isEditable = false : isEditable = true;	
-		console.log(isEditable);
 	}
 	function isEditableFunction(){
 		return isEditable;
