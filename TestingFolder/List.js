@@ -2,20 +2,20 @@
 //works but is super confusing with the delete methods idk how i got it to work but it did
 
 function List(title,subtitle,className){
-	let isEditable = false;
+	let editable = false;
 	let list = [];
 	let header = createHeader();
 	let body = createBody();
 	let element = init();
 
 	function entry(item,options){
-		let isEditable = true;
+		let editable = false;
 		//create item wrapper
-		let entryHeader = createEntryHeader();
-		let entryBody = createEntryBody();
-		let entryElement = entryInit();
+		let header = createHeader();
+		let body = createBody();
+		let element = init();
 
-		function createEntryHeader(){
+		function createHeader(){
 			//create item header
 			let main = document.createElement("div");
 			if(className != ""){
@@ -37,13 +37,13 @@ function List(title,subtitle,className){
 						button.className = className + "_edit_button";
 						button.innerText = "EDIT";
 						button.addEventListener("click", () => {
-							if(isEditable){
-								isEditable = false;
-								item.toggleEdit();
+
+							//1. outer entry 
+							if(editable){
+								toggleEdit();
 								button.innerText = "EDIT";
 							} else {
-								isEditable = true;	
-								item.toggleEdit();
+								toggleEdit();	
 								button.innerText = "SAVE";
 							} 
 						});
@@ -51,9 +51,9 @@ function List(title,subtitle,className){
 					}
 
 					//sets the unsafe edit option
-	/*				if(option == "UNSAFE_EDIT"){
-						isEditable = true;
-					}*/
+					if(option == "UNSAFE_EDIT"){
+						editable = true;
+					}
 
 					//sets the deletable button
 					if(option == "DELETABLE"){
@@ -63,9 +63,13 @@ function List(title,subtitle,className){
 						}
 						button.innerText = "X";
 						button.addEventListener("click", () => {
-							console.log(item.getElement());
-							console.log(isEditable);
-							if(item.isEditableFunction()){
+							console.log("Outer entry: " + editable);
+							console.log("Inner entry: " + item.isEditable());
+							//console.log(item.getValue());
+							/*for(let stuff of item.getList()){
+								console.log(stuff.getValue());
+							}*/
+							if(item.isEditable()){
 								let i = 0;
 								for(i; i < list.length; i++){
 									if(item === list[i]){
@@ -81,7 +85,7 @@ function List(title,subtitle,className){
 								}
 
 								list.pop();
-								main.remove();
+								element.remove();
 							}
 						});
 						main.appendChild(button);
@@ -91,7 +95,7 @@ function List(title,subtitle,className){
 			return main;
 		}
 
-		function createEntryBody(){
+		function createBody(){
 			let main = document.createElement("div");
 			if(className != ""){
 				main.className = className + "_item_body";
@@ -100,25 +104,47 @@ function List(title,subtitle,className){
 			return main;
 		}
 
-		function entryInit(){
+		function init(){
 			let main = document.createElement("div");
 			if(className != ""){
 				main.className = className + "_item";
 			}
-			main.appendChild(entryHeader);
-			main.appendChild(entryBody);
-			console.log(main);
+			main.appendChild(header);
+			main.appendChild(body);
 			return main;
 		}
 
+
+
+
+
+
 		function getElement(){
-			console.log(isEditable);
-			return entryElement;
+			return element;
 		}
+
+
+		//3. inner entry
+		function toggleEdit(){
+			(editable) ? editable = false : editable = true;
+			
+			item.toggleEdit();	
+		}
+
+		function isEditable(){
+			return isEditable;
+		}
+
+
+
 		return{
-			getElement
+			getElement,
+			toggleEdit,
+			isEditable
 		}
 	}
+
+	//end of inner object
 
 
 
@@ -162,30 +188,45 @@ function List(title,subtitle,className){
 	}
 
 	function addEntry(item,options){
-
 		//add item to the list
 		list.push(item);
 		body.appendChild(entry(item,options).getElement());
 	}
+
+
+
+
+
 
 	function getList(){
 		return list;
 	}
 
 	function getElement(){
-		console.log(isEditable);
 		return element;
 	}
 
-/*	function toggleEdit(){
-		(isEditable) ? isEditable = false : isEditable = true;	
-		console.log(isEditable);
-	}*/
+
+	function toggleEdit(){
+		(editable) ? editable = false : editable = true;
+		for(let entry of list){
+			entry.toggleEdit();
+		}
+	}
+
+	function isEditable(){
+		return editable;
+	}
+
+
+
+
 
 	return{
 		getList,
 		getElement,
 		addEntry,
-		//toggleEdit
+		toggleEdit,
+		isEditable
 	}
 }

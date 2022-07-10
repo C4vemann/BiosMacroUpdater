@@ -46,9 +46,10 @@ function OrderForm(a,b,c,d,e,f){
 		version.toggleEdit();
 		serial.toggleEdit();
 		asset.toggleEdit();
-		peripherals.getList().forEach((item)=>{
+		peripherals.toggleEdit();
+/*		peripherals.getList().forEach((item)=>{
 			item.toggleEdit();
-		});
+		});*/
 	}
 	function isEditableFunction(){
 		return isEditable;

@@ -20,9 +20,9 @@ function OrderFormComponent(text,value,type){
 	}
 	function toggleEdit(){
 		(isEditable) ? isEditable = false : isEditable = true;	
-		//textComponent.toggleEdit();
-		//inputComponent.toggleEdit();
-		console.log(isEditable);
+		console.log("Component: " + isEditable);
+		textComponent.toggleEdit();
+		inputComponent.toggleEdit();
 	}
 	function isEditableFunction(){
 		return isEditable;

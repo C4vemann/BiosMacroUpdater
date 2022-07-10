@@ -1,5 +1,5 @@
 function InputComponent(value,type){
-	let isEditable = false;
+	let editable = false;
 
 	let element = init();
 
@@ -7,7 +7,7 @@ function InputComponent(value,type){
 		let main = document.createElement("input");
 		main.value = value;
 		main.dataset.type = type;
-		main.readOnly = false;
+		main.readOnly = true;
 		main.addEventListener("change", () => {
 			switch(main.dataset.type){
 				case 'order':
@@ -34,6 +34,9 @@ function InputComponent(value,type){
 		return main;
 	}
 
+
+
+
 	function getValue(){
 		return element.value;
 	}
@@ -43,16 +46,26 @@ function InputComponent(value,type){
 	}
 
 	function toggleEdit(){
-		(isEditable) ? isEditable = false : isEditable = true;	
+		if(editable){
+			editable = false;
+			element.readOnly = true;
+		} else {
+			editable = true;
+			element.readOnly = false;
+		}
 	}
-	function isEditableFunction(){
-		return isEditable;
+
+	function isEditable(){
+		return editable;
 	}
+
+
+
 
 	return {
 		getElement,
 		getValue,
 		toggleEdit,
-		isEditableFunction
+		isEditable
 	}
 }

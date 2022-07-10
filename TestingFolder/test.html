@@ -33,16 +33,17 @@
 			}
 			.outer_list_body{
 				display: flex;
-				flex-direction: row;
+				flex-direction: column;
 				flex-wrap: wrap;
 				justify-content: space-around;
 				padding: 5px;
 				min-width: fit-content;
 			}
 			.outer_list_item{
-				border: 2px solid black;
+				border: 2px solid yellow;
 				clear: both;
 				min-width: fit-content;
+				margin: 10px;
 			}
 			.outer_list_item_header{
 				margin: 0;
@@ -74,6 +75,12 @@
 			.outer_list_item_body{
 				clear: both;
 			}
+			.inner_list{
+				border: 2px solid red;
+			}
+			.inner_list_item{
+				border: 2px solid blue;
+			}
 
 		</style>
 	</head>
@@ -98,7 +105,44 @@
 
 			document.getElementsByTagName("body")[0].appendChild(list.getElement());
 
-			let tc = TextComponent("")
+			let innerList = List("Peripherals: ", "", "inner_list");
+			let ic1 = InputComponent("One","input-component");
+			let ic2 = InputComponent("Two","input-component");
+			innerList.addEntry(ic1,["DELETABLE"]);
+			innerList.addEntry(ic2,["DELETABLE"]);
+
+			let innerList1 = List("Peripherals: ", "", "inner_list");
+			let ic3 = InputComponent("Value","input-component");
+			let ic4 = InputComponent("Nothing","input-component");
+			innerList1.addEntry(ic3,["DELETABLE"]);
+			innerList1.addEntry(ic4,["DELETABLE"]);	
+
+			let innerList2 = List("Peripherals: ", "", "inner_list");
+			let ic5 = InputComponent("Value","input-component");
+			let ic6 = InputComponent("Nothing","input-component");
+			innerList2.addEntry(ic5,["DELETABLE"]);
+			innerList2.addEntry(ic6,["DELETABLE"]);
+
+			innerList1.addEntry(innerList2,["DELETABLE"]);
+
+			innerList.addEntry(innerList1,["DELETABLE"]);
+
+
+			list.addEntry(innerList,["SAFE_EDIT","DELETABLE"]);
+
+
+
+
+
+
+
+/*			//works if in list we have if(item.isEditable())
+			innerList.addEntry(ic1,["DELETABLE"]);
+			innerList.addEntry(ic2,["DELETABLE"]);
+
+			list.addEntry(tc,[]);
+			list.addEntry(ic,[]);
+			list.addEntry(innerList,["SAFE_EDIT"]);*/
 			
 /*			list.addEntry(form,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
 			list.addEntry(form1,["SHOW_INDEX","SAFE_EDIT","DELETABLE"]);
